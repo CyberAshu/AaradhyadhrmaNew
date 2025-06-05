@@ -1,0 +1,61 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Blog Categories{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'dashboard:category_create' %}" class="btn btn-primary">
+    <i class="fas fa-plus"></i> New Category
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Posts</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td><strong>{{ category.name }}</strong></td>
+                        <td>{{ category.slug }}</td>
+                        <td>{{ category.post_count }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'dashboard:category_edit' category.id %}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'dashboard:category_delete' category.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="fas fa-folder fa-3x mb-3"></i>
+                                <p>No categories found</p>
+                                <a href="{% url 'dashboard:category_create' %}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus"></i> Create your first category
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

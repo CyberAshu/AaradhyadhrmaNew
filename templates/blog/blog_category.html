@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Blog Category Hero Section -->
+<section class="blog-category-hero-section py-5 bg-light">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">{{ category.name }}</h1>
+        <p class="lead mb-5 mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
+            {{ category.description }}
+        </p>
+    </div>
+</section>
+
+<!-- Blog Content Section -->
+<section class="blog-content-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Blog Posts -->
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    {% for post in posts %}
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+                        <div class="blog-card h-100">
+                            {% if post.featured_image %}
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-img img-fluid rounded">
+                            </a>
+                            {% else %}
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{% static 'images/blog/default-blog.jpg' %}" alt="{{ post.title }}" class="blog-img img-fluid rounded">
+                            </a>
+                            {% endif %}
+                            <div class="blog-content p-4">
+                                <div class="blog-meta mb-2">
+                                    <span class="post-date"><i class="far fa-calendar-alt me-1"></i>{{ post.published_on|date:"M d, Y" }}</span>
+                                    <span class="post-category ms-3"><i class="far fa-folder me-1"></i>{{ post.category.name }}</span>
+                                </div>
+                                <h3 class="blog-title mb-3">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </h3>
+                                <p class="blog-excerpt mb-3">{{ post.excerpt|truncatewords:20 }}</p>
+                                <div class="d-flex align-items-center">
+                                    <div class="author-img me-2">
+                                        {% if post.author.profile.avatar %}
+                                        <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.get_full_name }}" class="rounded-circle">
+                                        {% else %}
+                                        <div class="author-placeholder rounded-circle">{{ post.author.first_name|first }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="author-name">{{ post.author.get_full_name|default:post.author.username }}</div>
+                                    <div class="ms-auto">
+                                        <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12" data-aos="fade-up">
+                        <div class="alert alert-info">
+                            No blog posts available in this category yet. Please check back soon!
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                {% if posts.has_other_pages %}
+                <div class="pagination-container mt-5" data-aos="fade-up">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if posts.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            
+                            {% for i in posts.paginator.page_range %}
+                                {% if posts.number == i %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if posts.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <!-- Search Widget -->
+                    <div class="sidebar-widget search-widget mb-4" data-aos="fade-up">
+                        <h4 class="widget-title">Search</h4>
+                        <form action="{% url 'blog:blog_list' %}" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Search for posts...">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Categories Widget -->
+                    <div class="sidebar-widget categories-widget mb-4" data-aos="fade-up">
+                        <h4 class="widget-title">Categories</h4>
+                        <ul class="list-group">
+                            {% for cat in categories %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center {% if cat.id == category.id %}active{% endif %}">
+                                <a href="{{ cat.get_absolute_url }}" {% if cat.id == category.id %}class="text-white"{% endif %}>{{ cat.name }}</a>
+                                <span class="badge {% if cat.id == category.id %}bg-white text-primary{% else %}bg-primary{% endif %} rounded-pill">{{ cat.posts.count }}</span>
+                            </li>
+                            {% empty %}
+                            <li class="list-group-item">No categories available</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Tags Widget -->
+                    <div class="sidebar-widget tags-widget mb-4" data-aos="fade-up">
+                        <h4 class="widget-title">Tags</h4>
+                        <div class="tags-cloud">
+                            {% for tag in tags %}
+                            <a href="#" class="tag-link">{{ tag.name }}</a>
+                            {% empty %}
+                            <p>No tags available</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Posts Widget -->
+                    <div class="sidebar-widget recent-posts-widget" data-aos="fade-up">
+                        <h4 class="widget-title">Recent Posts</h4>
+                        <ul class="recent-posts-list list-unstyled">
+                            {% for post in posts|slice:":3" %}
+                            <li class="recent-post-item">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        {% if post.featured_image %}
+                                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="recent-post-img">
+                                        {% else %}
+                                        <img src="{% static 'images/blog/default-blog-small.jpg' %}" alt="{{ post.title }}" class="recent-post-img">
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="recent-post-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h5>
+                                        <p class="recent-post-date">
+                                            <i class="far fa-calendar-alt me-1"></i>{{ post.published_on|date:"M d, Y" }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% empty %}
+                            <li>No recent posts available</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

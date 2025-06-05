@@ -1,0 +1,220 @@
+/* Fix for CSS validation errors in team_member_detail.html */
+.skill-progress {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+[data-bs-theme="dark"] .skill-progress {
+    background-color: var(--bs-dark-bg-subtle);
+}
+
+/* Team Member Detail Page Styles */
+.team-member-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--primary-rgb), 0.03);
+    z-index: -1;
+}
+
+.team-member-profile-image {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.team-member-placeholder-large {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* This creates a 1:1 aspect ratio */
+    background: linear-gradient(135deg, var(--primary-color), #5670cc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    position: relative;
+}
+
+.team-member-placeholder-large span {
+    font-size: 8rem;
+    font-weight: 700;
+    color: white;
+}
+
+.team-member-position-large {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.team-member-social-large a {
+    color: var(--dark-color);
+    transition: var(--transition);
+}
+
+.team-member-social-large a:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.team-member-bio-full {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Skills section */
+.team-member-skills-section {
+    background-color: var(--light-color);
+}
+
+[data-bs-theme="dark"] .team-member-skills-section {
+    background-color: var(--dark-color);
+}
+
+/* Skills styles */
+.skills-wrapper {
+    padding: 2rem;
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+[data-bs-theme="dark"] .skills-wrapper {
+    background-color: #1a2234;
+}
+
+.skill-name {
+    font-weight: 600;
+}
+
+.skill-percentage {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Progress bar styles */
+.progress {
+    background-color: rgba(var(--primary-rgb), 0.1);
+}
+
+[data-bs-theme="dark"] .progress {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-progress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--primary-color);
+    transition: width 0.6s ease;
+}
+
+/* Dark Mode Styles */
+[data-bs-theme="dark"] .team-member-skills-section .section-title,
+[data-bs-theme="dark"] .team-member-projects-section .section-title {
+    color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .team-member-skills-section .section-subtitle,
+[data-bs-theme="dark"] .team-member-projects-section .section-subtitle {
+    color: var(--bs-secondary-color);
+}
+
+[data-bs-theme="dark"] .team-member-skills-section .skill-name,
+[data-bs-theme="dark"] .team-member-projects-section .project-title {
+    color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .team-member-skills-section .progress {
+    background-color: var(--bs-dark-bg-subtle);
+}
+
+[data-bs-theme="dark"] .team-member-projects-section .project-card {
+    background-color: var(--bs-dark-bg-subtle);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .team-member-projects-section .project-description {
+    color: var(--bs-secondary-color);
+}
+
+/* Ensure text-gradient works in dark mode */
+[data-bs-theme="dark"] .text-gradient {
+    background: linear-gradient(to right, var(--primary-color), #4b6fdd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Project card styles */
+.project-card {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    height: 100%;
+}
+
+[data-bs-theme="dark"] .project-card {
+    background-color: #1a2234;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .project-card:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.project-card-body {
+    padding: 2rem;
+}
+
+.project-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+}
+
+[data-bs-theme="dark"] .project-title {
+    color: var(--white-color);
+}
+
+.project-description {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+[data-bs-theme="dark"] .project-description {
+    color: #adb5bd;
+}
+
+.project-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-badge {
+    background-color: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+[data-bs-theme="dark"] .tech-badge {
+    background-color: rgba(var(--primary-rgb), 0.2);
+}

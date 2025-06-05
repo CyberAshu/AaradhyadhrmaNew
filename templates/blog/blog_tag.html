@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Blog Hero Section -->
+<section class="blog-hero-section py-5 bg-light">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Tag: {{ tag.name }}</h1>
+        <p class="lead mb-5 mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
+            Showing all posts tagged with "{{ tag.name }}"
+        </p>
+    </div>
+</section>
+
+<!-- Blog Content Section -->
+<section class="blog-content-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Blog Posts -->
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    {% for post in posts %}
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+                        <div class="blog-card h-100">
+                            {% if post.featured_image %}
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-img img-fluid rounded">
+                            </a>
+                            {% else %}
+                            <a href="{{ post.get_absolute_url }}">
+                                <div style="height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 0.25rem;" class="blog-img">
+                                    <span style="font-size: 1.2rem; color: #666;">{{ post.title|truncatechars:30 }}</span>
+                                </div>
+                            </a>
+                            {% endif %}
+                            <div class="blog-content p-4">
+                                <div class="blog-meta mb-2">
+                                    <span class="post-date"><i class="far fa-calendar-alt me-1"></i>{{ post.published_on|date:"M d, Y" }}</span>
+                                    <span class="post-category ms-3"><i class="far fa-folder me-1"></i>{{ post.category.name }}</span>
+                                </div>
+                                <h3 class="blog-title mb-3" style="height: 3.2em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </h3>
+                                <p class="blog-excerpt mb-3" style="height: 4.5em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;">{{ post.excerpt|truncatewords:20 }}</p>
+                                <div class="d-flex align-items-center">
+                                    <div class="author-img me-2">
+                                        {% if post.author.profile.avatar %}
+                                        <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.get_full_name }}" class="rounded-circle">
+                                        {% else %}
+                                        <div class="author-placeholder rounded-circle">{{ post.author.first_name|first }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="author-name">{{ post.author.get_full_name|default:post.author.username }}</div>
+                                    <div class="ms-auto">
+                                        <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12" data-aos="fade-up">
+                        <div class="alert alert-info">
+                            No blog posts available for this tag yet. Please check back soon!
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                {% if posts.has_other_pages %}
+                <div class="pagination-container mt-5" data-aos="fade-up">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if posts.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            
+                            {% for i in posts.paginator.page_range %}
+                                {% if posts.number == i %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if posts.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <!-- Search Widget -->
+                    <div class="sidebar-widget search-widget mb-4" data-aos="fade-up">
+                        <h4 class="widget-title">Search</h4>
+                        <form action="{% url 'blog:blog_list' %}" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Search for posts...">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Categories Widget -->
+                    <div class="sidebar-widget categories-widget mb-4" data-aos="fade-up">
+                        <h4 class="widget-title">Categories</h4>
+                        <ul class="list-group">
+                            {% for category in categories %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                                <span class="badge bg-primary rounded-pill">{{ category.posts.count }}</span>
+                            </li>
+                            {% empty %}
+                            <li class="list-group-item">No categories available</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Tags Widget -->
+                    <div class="sidebar-widget tags-widget mb-4" data-aos="fade-up">
+                        <h4 class="widget-title">Tags</h4>
+                        <div class="tags-cloud">
+                            {% for tag in tags %}
+                            <a href="{% url 'blog:blog_tag' tag.slug %}" class="tag-link">{{ tag.name }}</a>
+                            {% empty %}
+                            <p>No tags available</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Posts Widget -->
+                    <div class="sidebar-widget recent-posts-widget" data-aos="fade-up">
+                        <h4 class="widget-title">Recent Posts</h4>
+                        <ul class="recent-posts-list list-unstyled">
+                            {% for post in posts|slice:":3" %}
+                            <li class="recent-post-item">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        {% if post.featured_image %}
+                                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="recent-post-img">
+                                        {% else %}
+                                        <div style="width: 70px; height: 70px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 0.25rem;" class="recent-post-img">
+                                            <span style="font-size: 0.8rem; color: #666;">Blog</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="recent-post-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h5>
+                                        <p class="recent-post-date">
+                                            <i class="far fa-calendar-alt me-1"></i>{{ post.published_on|date:"M d, Y" }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% empty %}
+                            <li>No recent posts available</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section py-5 bg-light">
+    <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title mb-4">Subscribe to Our Newsletter</h2>
+                <p class="mb-4">Stay updated with our latest blog posts, news, and updates.</p>
+                <div class="newsletter-form">
+                    <form>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Enter your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

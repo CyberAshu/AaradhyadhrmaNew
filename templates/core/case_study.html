@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Case Study Hero Section -->
+<section class="case-study-hero-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="badge bg-primary text-white mb-3">Case Study</div>
+                <h1 class="display-4 fw-bold mb-4">{{ case_study.title }}</h1>
+                <p class="lead mb-4">Learn how we helped {{ case_study.client }} transform their business with innovative technology solutions.</p>
+                <div class="d-flex flex-wrap gap-4 mb-4">
+                    <div class="case-study-meta">
+                        <span class="text-muted">Client:</span>
+                        <strong>{{ case_study.client }}</strong>
+                    </div>
+                    <div class="case-study-meta">
+                        <span class="text-muted">Industry:</span>
+                        <strong>{{ case_study.industry }}</strong>
+                    </div>
+                    <div class="case-study-meta">
+                        <span class="text-muted">Duration:</span>
+                        <strong>{{ case_study.duration }}</strong>
+                    </div>
+                    <div class="case-study-meta">
+                        <span class="text-muted">Year:</span>
+                        <strong>{{ case_study.year }}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="{% static case_study.image %}" alt="{{ case_study.title }}" class="img-fluid rounded shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Case Study Content Section -->
+<section class="case-study-content-section py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8" data-aos="fade-up">
+                <!-- Challenge Section -->
+                <div class="case-study-section mb-5">
+                    <h2 class="section-title mb-4">The Challenge</h2>
+                    <div class="section-divider mb-4"></div>
+                    <p class="mb-0">{{ case_study.challenge }}</p>
+                </div>
+                
+                <!-- Solution Section -->
+                <div class="case-study-section mb-5">
+                    <h2 class="section-title mb-4">Our Solution</h2>
+                    <div class="section-divider mb-4"></div>
+                    <p class="mb-0">{{ case_study.solution }}</p>
+                </div>
+                
+                <!-- Results Section -->
+                <div class="case-study-section mb-5">
+                    <h2 class="section-title mb-4">The Results</h2>
+                    <div class="section-divider mb-4"></div>
+                    <div class="row g-4 mb-4">
+                        {% for result in case_study.results %}
+                        <div class="col-md-6">
+                            <div class="result-card p-4 h-100 bg-light rounded shadow-sm">
+                                <div class="d-flex align-items-center">
+                                    <div class="result-icon me-3">
+                                        <i class="fas fa-chart-line text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-0">{{ result }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Testimonial Section -->
+                <div class="case-study-section mb-5">
+                    <h2 class="section-title mb-4">Client Testimonial</h2>
+                    <div class="section-divider mb-4"></div>
+                    <div class="testimonial-card p-4 bg-light rounded shadow-sm">
+                        <div class="testimonial-quote mb-4">
+                            <i class="fas fa-quote-left text-primary me-2"></i>
+                            {{ case_study.testimonial.quote }}
+                            <i class="fas fa-quote-right text-primary ms-2"></i>
+                        </div>
+                        <div class="client-info d-flex align-items-center">
+                            <div class="client-img-placeholder me-3">{{ case_study.testimonial.author|first }}</div>
+                            <div>
+                                <h5 class="client-name mb-0">{{ case_study.testimonial.author }}</h5>
+                                <p class="client-position mb-0">{{ case_study.testimonial.position }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- Technologies Used -->
+                <div class="sidebar-section mb-5">
+                    <h3 class="sidebar-title mb-4">Technologies Used</h3>
+                    <div class="tech-stack">
+                        {% for tech in case_study.technologies %}
+                        <span class="tech-badge">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Related Case Studies -->
+                <div class="sidebar-section mb-5">
+                    <h3 class="sidebar-title mb-4">Related Case Studies</h3>
+                    <div class="related-case-studies">
+                        <div class="related-case-study mb-4">
+                            <a href="{% url 'core:case_study' 'e-commerce-platform-redesign' %}" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="related-case-study-img me-3">
+                                        <img src="{% static 'images/case-study-1.png' %}" alt="E-Commerce Platform Redesign" class="img-fluid rounded">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">E-Commerce Platform Redesign</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="related-case-study mb-4">
+                            <a href="{% url 'core:case_study' 'ai-powered-analytics-dashboard' %}" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="related-case-study-img me-3">
+                                        <img src="{% static 'images/case-study-2.png' %}" alt="AI-Powered Analytics Dashboard" class="img-fluid rounded">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">AI-Powered Analytics Dashboard</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="related-case-study mb-4">
+                            <a href="{% url 'core:case_study' 'enterprise-resource-planning-system' %}" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="related-case-study-img me-3">
+                                        <img src="{% static 'images/case-study-3.png' %}" alt="Enterprise Resource Planning System" class="img-fluid rounded">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Enterprise Resource Planning System</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA Section -->
+                <div class="sidebar-section cta-section p-4 bg-primary text-white rounded shadow">
+                    <h3 class="sidebar-title mb-3">Ready to transform your business?</h3>
+                    <p class="mb-4">Let's discuss how we can help you achieve similar results with our custom technology solutions.</p>
+                    <a href="{% url 'core:contact' %}" class="btn btn-light">Contact Us Today</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- More Case Studies Section -->
+<section class="more-case-studies-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Explore More Success Stories</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle mx-auto" style="max-width: 700px;">Discover how we've helped other clients achieve their goals</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Case Study 1 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="case-study-card h-100">
+                    <img src="{% static 'images/case-study-1.png' %}" alt="Case Study 1" class="img-fluid rounded mb-3">
+                    <h3>E-Commerce Platform Redesign</h3>
+                    <p>How we increased conversion rates by 45% for a global retail company.</p>
+                    <a href="{% url 'core:case_study' 'e-commerce-platform-redesign' %}" class="btn btn-outline-primary btn-sm">Read Case Study <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+            
+            <!-- Case Study 2 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="case-study-card h-100">
+                    <img src="{% static 'images/case-study-2.png' %}" alt="Case Study 2" class="img-fluid rounded mb-3">
+                    <h3>AI-Powered Analytics Dashboard</h3>
+                    <p>Transforming data into actionable insights for a data science company.</p>
+                    <a href="{% url 'core:case_study' 'ai-powered-analytics-dashboard' %}" class="btn btn-outline-primary btn-sm">Read Case Study <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+            
+            <!-- Case Study 3 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="case-study-card h-100">
+                    <img src="{% static 'images/case-study-3.png' %}" alt="Case Study 3" class="img-fluid rounded mb-3">
+                    <h3>Enterprise Resource Planning System</h3>
+                    <p>Streamlining operations for a manufacturing company with a custom ERP solution.</p>
+                    <a href="{% url 'core:case_study' 'enterprise-resource-planning-system' %}" class="btn btn-outline-primary btn-sm">Read Case Study <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block account_title %}{% trans "Email Addresses" %}{% endblock %}
+
+{% block account_content %}
+<div class="account-email-section">
+    {% if user.emailaddress_set.all %}
+    <p class="mb-4">{% trans 'The following email addresses are associated with your account:' %}</p>
+
+    <form action="{% url 'account_email' %}" class="email_list" method="post">
+        {% csrf_token %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "Primary" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for emailaddress in user.emailaddress_set.all %}
+                    <tr>
+                        <td>
+                            <label for="email_radio_{{forloop.counter}}" class="form-check-label">
+                                {{ emailaddress.email }}
+                            </label>
+                        </td>
+                        <td>
+                            {% if emailaddress.verified %}
+                            <span class="badge bg-success">{% trans "Verified" %}</span>
+                            {% else %}
+                            <span class="badge bg-warning text-dark">{% trans "Unverified" %}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check">
+                                <input id="email_radio_{{forloop.counter}}" type="radio" name="email" class="form-check-input" value="{{emailaddress.email}}" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{% endif %}>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 d-flex flex-wrap gap-2">
+            <button class="btn btn-primary" type="submit" name="action_primary">{% trans 'Make Primary' %}</button>
+            <button class="btn btn-outline-success" type="submit" name="action_send">{% trans 'Re-send Verification' %}</button>
+            <button class="btn btn-outline-danger" type="submit" name="action_remove">{% trans 'Remove' %}</button>
+        </div>
+    </form>
+
+    {% else %}
+    <div class="alert alert-warning">
+        <p>{% trans 'You currently do not have any email address set up. You should add an email address so you can receive notifications, reset your password, etc.' %}</p>
+    </div>
+    {% endif %}
+
+    {% if can_add_email %}
+    <hr class="my-4">
+    <h3 class="h5 mb-3">{% trans "Add Email Address" %}</h3>
+
+    <form method="post" action="{% url 'account_email' %}" class="add_email">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_email" class="form-label">{% trans "Email Address" %}:</label>
+            <input type="email" name="email" id="id_email" class="form-control" placeholder="{% trans 'Email address' %}" required>
+        </div>
+        <button name="action_add" type="submit" class="btn btn-primary">{% trans "Add Email" %}</button>
+    </form>
+    {% endif %}
+
+    <div class="email-confirmation mt-4">
+        <p class="small text-muted">
+            {% trans "Note: To confirm or change your email address, please click the verification link in the email we sent you." %}
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript">
+(function() {
+  var message = "{% trans 'Do you really want to remove the selected email address?' %}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("click", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

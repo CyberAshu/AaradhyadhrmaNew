@@ -1,0 +1,100 @@
+{% load static %}
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg py-3">
+        <div class="container-fluid px-4">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'core:home' %}">
+                <img src="{% static 'images/logo.svg' %}" alt="Aaradhyadhrma Logo" class="logo-img" height="40">
+                <span class="fw-bold site-name">Aaradhyadhrma</span>
+            </a>
+            
+            <div class="header-right d-flex align-items-center">
+                <!-- Mobile Toggle Button -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            
+            <!-- Main Menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                           href="{% url 'core:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" 
+                           href="{% url 'core:about' %}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" 
+                           href="{% url 'core:services' %}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'team' %}active{% endif %}" 
+                           href="{% url 'core:team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'blog' in request.path %}active{% endif %}" 
+                           href="{% url 'blog:blog_list' %}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'careers' in request.path %}active{% endif %}" 
+                           href="{% url 'careers:careers_list' %}">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" 
+                           href="{% url 'core:contact' %}">Contact</a>
+                    </li>
+                    
+                    <!-- Authentication Links -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i>{{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-sm btn-primary text-white ms-lg-2 px-3" href="{% url 'account_signup' %}">Sign Up</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item d-lg-none mt-3 mb-2">
+                        <div class="mobile-theme-selector">
+                            <span class="mobile-mode-label">Dark Mode</span>
+                            <div class="mobile-mode-toggle">
+                                <input type="checkbox" id="mobileDarkMode" checked onchange="document.getElementById('darkModeToggle').click();">
+                                <label for="mobileDarkMode" class="toggle-track">
+                                    <span class="toggle-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <li class="nav-item ms-3 d-none d-lg-block">
+                        <button id="darkModeToggle" class="btn btn-sm btn-outline-secondary mode-toggle">
+                            <i class="fas fa-moon dark-icon"></i>
+                            <i class="fas fa-sun light-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Mobile Dark Mode Toggle -->
+                <!-- <div class="d-lg-none position-fixed" style="bottom: 20px; right: 20px; z-index: 1000;">
+                    <button id="mobileDarkModeToggle" class="btn btn-outline-secondary rounded-circle p-2 shadow" onclick="document.getElementById('darkModeToggle').click();">
+                        <i class="fas fa-moon dark-icon"></i>
+                        <i class="fas fa-sun light-icon"></i>
+                    </button>
+                </div> -->
+            </div>
+        </div>
+    </nav>
+</header>

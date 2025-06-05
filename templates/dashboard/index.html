@@ -1,0 +1,199 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Content Stats -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="dashboard-card primary p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Blog Posts</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_posts }}</div>
+                    <div class="text-sm">
+                        <span class="badge bg-success">{{ stats.published_posts }} Published</span>
+                        <span class="badge bg-warning">{{ stats.draft_posts }} Drafts</span>
+                    </div>
+                </div>
+                <div class="dashboard-card-icon">
+                    <i class="fas fa-blog text-primary"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="dashboard-card success p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Team Members</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_team_members }}</div>
+                </div>
+                <div class="dashboard-card-icon">
+                    <i class="fas fa-users text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="dashboard-card info p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Active Jobs</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.active_jobs }}</div>
+                    <div class="text-sm">
+                        <span class="badge bg-info">{{ stats.total_job_applications }} Applications</span>
+                    </div>
+                </div>
+                <div class="dashboard-card-icon">
+                    <i class="fas fa-briefcase text-info"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="dashboard-card warning p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Users</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.users }}</div>
+                </div>
+                <div class="dashboard-card-icon">
+                    <i class="fas fa-user text-warning"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Blog Posts -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow h-100">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Blog Posts</h6>
+                <a href="{% url 'dashboard:blog_list' %}" class="btn btn-sm btn-primary">View All</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in recent_posts %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'dashboard:blog_edit' post.id %}">{{ post.title }}</a>
+                                </td>
+                                <td>
+                                    {% if post.status == 'published' %}
+                                    <span class="badge bg-success">Published</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Draft</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ post.created_on|date:"M d, Y" }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">No blog posts yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Job Applications -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow h-100">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Job Applications</h6>
+                <a href="{% url 'dashboard:careers_list' %}" class="btn btn-sm btn-primary">View All</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for application in recent_applications %}
+                            <tr>
+                                <td>{{ application.name }}</td>
+                                <td>{{ application.job.title }}</td>
+                                <td>{{ application.applied_date|date:"M d, Y" }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">No job applications yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Contact Messages -->
+    <div class="col-12 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Contact Messages</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in recent_contacts %}
+                            <tr>
+                                <td>{{ contact.name }}</td>
+                                <td>{{ contact.email }}</td>
+                                <td>{{ contact.subject }}</td>
+                                <td>{{ contact.message|truncatechars:50 }}</td>
+                                <td>{{ contact.date_sent|date:"M d, Y" }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No contact messages yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // You could add charts or additional JS functionality here
+    // Example: monthly blog post statistics chart using Chart.js
+</script>
+{% endblock %}

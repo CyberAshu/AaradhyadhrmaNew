@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Terms of Service - Aaradhyadhrma{% endblock %}
+
+{% block content %}
+<!-- Terms of Service Section -->
+<section class="terms-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h1 class="mb-4">Terms of Service</h1>
+                        <p class="text-muted mb-4">Last updated: May 27, 2025</p>
+                        
+                        <div class="terms-content">
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">1. Introduction</h2>
+                                <p>Welcome to Aaradhyadhrma. These Terms of Service govern your use of our website and services offered by Aaradhyadhrma.</p>
+                                <p>By accessing or using our website and services, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access our website or use our services.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">2. Use of Our Services</h2>
+                                <p>Our services are designed to provide innovative software solutions with expertise in Python, Java, JavaScript, and AI/ML technologies. You agree to use our services only for lawful purposes and in accordance with these Terms.</p>
+                                <p>You are prohibited from:</p>
+                                <ul>
+                                    <li>Using our services in any way that violates any applicable laws or regulations</li>
+                                    <li>Attempting to interfere with the proper functioning of our services</li>
+                                    <li>Engaging in any activity that could harm our systems or compromise the security of our services</li>
+                                    <li>Using our services to transmit any malicious code or engage in any activity that may disrupt or harm other users</li>
+                                </ul>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">3. Intellectual Property</h2>
+                                <p>The content, features, and functionality of our website and services, including but not limited to text, graphics, logos, button icons, images, audio clips, data compilations, and software, are owned by Aaradhyadhrma or its licensors and are protected by copyright, trademark, and other intellectual property laws.</p>
+                                <p>You may not copy, modify, distribute, sell, or lease any part of our services or included software, nor may you reverse engineer or attempt to extract the source code of that software, unless laws prohibit these restrictions or you have our written permission.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">4. User Accounts</h2>
+                                <p>When you create an account with us, you must provide accurate, complete, and up-to-date information. You are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer or device. You agree to accept responsibility for all activities that occur under your account.</p>
+                                <p>We reserve the right to refuse service, terminate accounts, remove or edit content, or cancel orders at our sole discretion.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">5. Privacy Policy</h2>
+                                <p>Your use of our services is also governed by our Privacy Policy, which can be found <a href="{% url 'core:privacy_policy' %}">here</a>. By using our services, you consent to the practices described in the Privacy Policy.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">6. Limitation of Liability</h2>
+                                <p>To the fullest extent permitted by applicable law, Aaradhyadhrma shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to, loss of profits, data, use, goodwill, or other intangible losses, resulting from:</p>
+                                <ul>
+                                    <li>Your access to or use of or inability to access or use our services</li>
+                                    <li>Any conduct or content of any third party on our services</li>
+                                    <li>Any content obtained from our services</li>
+                                    <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+                                </ul>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">7. Disclaimer of Warranties</h2>
+                                <p>Our services are provided "as is" and "as available" without warranties of any kind, either express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement, or course of performance.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">8. Changes to Terms</h2>
+                                <p>We reserve the right to modify or replace these Terms at any time. It is your responsibility to review these Terms periodically for changes. Your continued use of our services following the posting of any changes constitutes acceptance of those changes.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">9. Governing Law</h2>
+                                <p>These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions.</p>
+                            </section>
+                            
+                            <section class="mb-5">
+                                <h2 class="h4 mb-3">10. Contact Us</h2>
+                                <p>If you have any questions or concerns about our Terms of Service, please contact us at:</p>
+                                <address>
+                                    <strong>Aaradhyadhrma</strong><br>
+                                    123 Tech Park, Bengaluru, Karnataka, India<br>
+                                    Email: legal@aaradhyadhrma.com<br>
+                                    Phone: +91 98765 43210
+                                </address>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

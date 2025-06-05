@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dark-mode-team.css' %}">
+<link rel="stylesheet" href="{% static 'css/team-detail-fix.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Team Member Hero Section -->
+<section class="team-member-hero-section py-6">
+    <div class="team-member-hero-bg"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="team-member-profile-image">
+                    {% if member.photo %}
+                        <img src="{{ member.photo.url }}?v={{ member.photo.name|slugify }}" alt="{{ member.name }}" class="img-fluid rounded shadow">
+                    {% else %}
+                        <div class="team-member-placeholder-large">
+                            <span>{{ member.name|first }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="badge bg-primary-soft mb-3">Team Member</div>
+                <h1 class="hero-title mb-3">{{ member.name }}</h1>
+                <p class="team-member-position-large mb-4">{{ member.position }}</p>
+                <div class="team-member-social-large mb-4">
+                    {% if member.linkedin %}
+                    <a href="{{ member.linkedin }}" target="_blank" class="me-3"><i class="fab fa-linkedin fa-2x"></i></a>
+                    {% endif %}
+                    {% if member.github %}
+                    <a href="{{ member.github }}" target="_blank" class="me-3"><i class="fab fa-github fa-2x"></i></a>
+                    {% endif %}
+                    {% if member.twitter %}
+                    <a href="{{ member.twitter }}" target="_blank" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                    {% endif %}
+                </div>
+                <div class="team-member-bio-full">
+                    {{ member.bio|linebreaks }}
+                </div>
+                <a href="{% url 'core:team' %}" class="btn btn-outline-primary mt-4">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Team
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Skills Section -->
+<section class="team-member-skills-section py-6">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-primary-soft mb-3">Expertise</div>
+            <h2 class="section-title">Technical <span class="text-gradient">Skills</span></h2>
+            <p class="section-subtitle">Areas of expertise and professional capabilities</p>
+        </div>
+        
+        <div class="row" data-aos="fade-up">
+            <div class="col-lg-8 mx-auto">
+                <div class="skills-wrapper">
+                    {% if skills %}
+                        {% for skill in skills %}
+                        <div class="skill-item mb-4">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="skill-name">{{ skill.name }}</span>
+                                <span class="skill-percentage">{{ skill.level }}%</span>
+                            </div>
+                            <div class="progress skill-progress">
+                                <div class="progress-bar custom-progress" role="progressbar" data-width="{{ skill.level|floatformat:0 }}" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ skill.level|floatformat:0 }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% elif default_skills %}
+                        {% for skill in default_skills %}
+                        <div class="skill-item mb-4">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="skill-name">{{ skill.name }}</span>
+                                <span class="skill-percentage">{{ skill.level }}%</span>
+                            </div>
+                            <div class="progress skill-progress">
+                                <div class="progress-bar custom-progress" role="progressbar" data-width="{{ skill.level|floatformat:0 }}" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ skill.level|floatformat:0 }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No skills found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="team-member-projects-section py-6">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-primary-soft mb-3">Portfolio</div>
+            <h2 class="section-title">Recent <span class="text-gradient">Projects</span></h2>
+            <p class="section-subtitle">Showcasing some of the recent work and contributions</p>
+        </div>
+        
+        <div class="row">
+            {% if projects %}
+                {% for project in projects %}
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+                    <div class="project-card h-100">
+                        <div class="project-card-body">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <p class="project-description">{{ project.description }}</p>
+                            <div class="project-tech-stack">
+                                {% for tech in project.tech_stack_list %}
+                                <span class="tech-badge">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% elif default_projects %}
+                {% for project in default_projects %}
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+                    <div class="project-card h-100">
+                        <div class="project-card-body">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <p class="project-description">{{ project.description }}</p>
+                            <div class="project-tech-stack">
+                                {% for tech in project.tech_stack_list %}
+                                <span class="tech-badge">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>No projects found.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="team-member-contact-section py-6 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center" data-aos="fade-up">
+                <div class="badge bg-primary-soft mb-3">Get in Touch</div>
+                <h2 class="section-title mb-4">Interested in working with <span class="text-gradient">{{ member.name }}</span>?</h2>
+                <p class="section-subtitle mb-5">Reach out to discuss your project requirements or for any professional inquiries</p>
+                <a href="{% url 'core:contact' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-envelope me-2"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize progress bars with animation when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation to progress bars when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.custom-progress');
+                    if (progressBar) {
+                        const width = progressBar.getAttribute('data-width');
+                        progressBar.style.width = width + '%';
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        // Observe all progress bars
+        document.querySelectorAll('.skill-progress').forEach(progress => {
+            observer.observe(progress);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Delete Job Listing{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-body text-center p-5">
+        <div class="mb-4">
+            <i class="fas fa-exclamation-triangle text-warning fa-4x"></i>
+        </div>
+        <h2 class="mb-4">Confirm Deletion</h2>
+        <p class="mb-4">Are you sure you want to delete the job listing "<strong>{{ job.title }}</strong>"?</p>
+        
+        {% if job.applications.count > 0 %}
+        <div class="alert alert-warning mb-4">
+            <i class="fas fa-info-circle"></i> 
+            This job listing has <strong>{{ job.applications.count }}</strong> application(s).
+            Deleting this listing will remove all associated applications.
+        </div>
+        {% endif %}
+        
+        <p class="text-danger mb-4">This action cannot be undone.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'dashboard:careers_edit' job.id %}" class="btn btn-outline-secondary me-2">
+                    <i class="fas fa-arrow-left"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete Job Listing
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

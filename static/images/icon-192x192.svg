@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a154b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6e8fff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#25e0a0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.2"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="172" height="172" rx="30" ry="30" fill="url(#icon-gradient)" x="10" y="10" filter="url(#shadow)"/>
+  <text x="96" y="125" font-family="Helvetica, Arial, sans-serif" font-size="100" font-weight="bold" text-anchor="middle" fill="#ffffff">A</text>
+</svg>

@@ -1,0 +1,447 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Team Hero Section -->
+<section class="team-hero-section py-6">
+    <div class="team-hero-bg"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="badge bg-primary-soft mb-3">Our People</div>
+                <h1 class="hero-title mb-4">Meet The <span class="text-gradient">Brilliant Minds</span> Behind Our Success</h1>
+                <p class="lead mb-5">
+                    Our diverse team combines technical excellence with creative problem-solving to deliver outstanding results. 
+                    Together, we're building the future of technology solutions.
+                </p>
+                <div class="team-hero-stats">
+                    <div class="team-hero-stat">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-text">Team Members</span>
+                    </div>
+                    <div class="team-hero-stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-text">Years Experience</span>
+                    </div>
+                    <div class="team-hero-stat">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-text">Projects Delivered</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="team-hero-image">
+                    <img src="{% static 'images/team/team-hero.png' %}" alt="Our Team" class="img-fluid">
+                    <div class="team-hero-shape-1"></div>
+                    <div class="team-hero-shape-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Members Section -->
+<section class="team-members-section py-6">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-primary-soft mb-3">Our Experts</div>
+            <h2 class="section-title">Meet The <span class="text-gradient">Talented Team</span></h2>
+            <p class="section-subtitle">Passionate professionals driving innovation and excellence</p>
+        </div>
+        
+        <div class="team-filter-buttons mb-4" data-aos="fade-up">
+            <button class="team-filter-btn active" data-filter="all">All</button>
+            <button class="team-filter-btn" data-filter="development">Development</button>
+            <button class="team-filter-btn" data-filter="design">Design</button>
+            <button class="team-filter-btn" data-filter="management">Management</button>
+        </div>
+        
+        <div class="team-grid">
+            {% for member in team_members %}
+            <div class="team-member-card" data-category="{{ member.department|default:'development' }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            {% if member.photo %}
+                                <img src="{{ member.photo.url }}?v={{ member.photo.name|slugify }}" alt="{{ member.name }}">
+                            {% else %}
+                                <div class="team-member-placeholder">{{ member.name|first }}</div>
+                            {% endif %}
+                            <div class="team-member-social">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                {% endif %}
+                                {% if member.github %}
+                                <a href="{{ member.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                                {% endif %}
+                                {% if member.twitter %}
+                                <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>{{ member.name }}</h3>
+                            <p class="team-member-position">{{ member.position }}</p>
+                            <div class="team-member-tags">
+                                {% for skill in member.skills.all|slice:":3" %}
+                                <span class="team-member-tag">{{ skill.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="team-member-actions">
+                                <button class="team-member-action-btn btn-flip" onclick="toggleFlip(this)">
+                                    <i class="fas fa-sync-alt"></i> Info
+                                </button>
+                                <a href="{% url 'core:team_member_detail' member.id %}" class="team-member-action-btn btn-profile">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>{{ member.name }}</h3>
+                        <p class="team-member-bio">{{ member.bio|truncatewords:30 }}</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">{{ member.experience|default:"5" }}</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">{{ member.projects.count|default:"10" }}</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                        <button class="team-member-action-btn btn-flip mt-3" onclick="toggleFlip(this)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default Team Members if none in database -->
+            <div class="team-member-card" data-category="management" data-aos="fade-up" data-aos-delay="100">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <div class="team-member-placeholder">
+                                <span>A</span>
+                            </div>
+                            <div class="team-member-social">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>Ayush Sen</h3>
+                            <p class="team-member-position">Founder & Lead Developer</p>
+                            <div class="team-member-tags">
+                                <span class="team-member-tag">Python</span>
+                                <span class="team-member-tag">AI/ML</span>
+                                <span class="team-member-tag">Architecture</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>Ayush Sen</h3>
+                        <p class="team-member-bio">Ayush has over 8 years of experience in software development with expertise in Python, Java, and AI/ML technologies. He founded Aaradhyadhrma with a vision to combine ancient wisdom with modern technology solutions.</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">8</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">25</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-member-card" data-category="development" data-aos="fade-up" data-aos-delay="200">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <div class="team-member-placeholder">
+                                <span>A</span>
+                            </div>
+                            <div class="team-member-social">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>Ashutosh</h3>
+                            <p class="team-member-position">Senior Developer</p>
+                            <div class="team-member-tags">
+                                <span class="team-member-tag">Java</span>
+                                <span class="team-member-tag">Spring Boot</span>
+                                <span class="team-member-tag">Databases</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>Ashutosh</h3>
+                        <p class="team-member-bio">Ashutosh specializes in backend development with expertise in Java, Spring Boot, and database optimization. He has successfully delivered enterprise-grade applications for numerous clients across various sectors.</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">6</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">18</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-member-card" data-category="design" data-aos="fade-up" data-aos-delay="300">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <div class="team-member-placeholder">
+                                <span>R</span>
+                            </div>
+                            <div class="team-member-social">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>Rahul</h3>
+                            <p class="team-member-position">Frontend Developer</p>
+                            <div class="team-member-tags">
+                                <span class="team-member-tag">React</span>
+                                <span class="team-member-tag">JavaScript</span>
+                                <span class="team-member-tag">UI/UX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>Rahul</h3>
+                        <p class="team-member-bio">Rahul is a creative frontend developer with a strong eye for design and user experience. His expertise in React, JavaScript, and modern CSS frameworks helps create engaging and responsive user interfaces.</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">5</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">15</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Team Section JavaScript -->
+<script>
+    function toggleFlip(button) {
+        // Find the closest team-member-card parent
+        const card = button.closest('.team-member-card');
+        
+        // Toggle the flipped class
+        card.classList.toggle('flipped');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Team filtering functionality
+        const filterButtons = document.querySelectorAll('.team-filter-btn');
+        const teamCards = document.querySelectorAll('.team-member-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get filter value
+                const filterValue = button.getAttribute('data-filter');
+                
+                // Filter team members
+                teamCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Team Culture Section -->
+<section class="team-culture-section py-6">
+    <div class="culture-bg-pattern"></div>
+    <div class="container position-relative">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-primary-soft mb-3">Our Values</div>
+            <h2 class="section-title">The <span class="text-gradient">Culture</span> That Drives Us</h2>
+            <p class="section-subtitle">The principles and practices that make us unique</p>
+        </div>
+        
+        <div class="culture-grid">
+            <!-- Culture Point 1 -->
+            <div class="culture-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="culture-card-inner">
+                    <div class="culture-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We encourage creative thinking and embrace new ideas to solve complex problems.</p>
+                    <ul class="culture-features">
+                        <li><i class="fas fa-check-circle"></i> Experimentation</li>
+                        <li><i class="fas fa-check-circle"></i> Creative freedom</li>
+                        <li><i class="fas fa-check-circle"></i> Forward thinking</li>
+                    </ul>
+                </div>
+                <div class="culture-card-shape"></div>
+            </div>
+            
+            <!-- Culture Point 2 -->
+            <div class="culture-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="culture-card-inner">
+                    <div class="culture-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Collaboration</h3>
+                    <p>We believe in the power of teamwork and open communication to achieve great results.</p>
+                    <ul class="culture-features">
+                        <li><i class="fas fa-check-circle"></i> Team synergy</li>
+                        <li><i class="fas fa-check-circle"></i> Open communication</li>
+                        <li><i class="fas fa-check-circle"></i> Shared success</li>
+                    </ul>
+                </div>
+                <div class="culture-card-shape"></div>
+            </div>
+            
+            <!-- Culture Point 3 -->
+            <div class="culture-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="culture-card-inner">
+                    <div class="culture-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Continuous Learning</h3>
+                    <p>We invest in ongoing professional development and knowledge sharing.</p>
+                    <ul class="culture-features">
+                        <li><i class="fas fa-check-circle"></i> Learning resources</li>
+                        <li><i class="fas fa-check-circle"></i> Skill development</li>
+                        <li><i class="fas fa-check-circle"></i> Knowledge sharing</li>
+                    </ul>
+                </div>
+                <div class="culture-card-shape"></div>
+            </div>
+            
+            <!-- Culture Point 4 -->
+            <div class="culture-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="culture-card-inner">
+                    <div class="culture-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Work-Life Balance</h3>
+                    <p>We prioritize well-being and encourage a healthy balance between work and personal life.</p>
+                    <ul class="culture-features">
+                        <li><i class="fas fa-check-circle"></i> Flexible hours</li>
+                        <li><i class="fas fa-check-circle"></i> Remote options</li>
+                        <li><i class="fas fa-check-circle"></i> Wellness programs</li>
+                    </ul>
+                </div>
+                <div class="culture-card-shape"></div>
+            </div>
+        </div>
+        
+        <div class="culture-quote" data-aos="fade-up">
+            <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+            <blockquote>
+                <p>Our culture is the foundation of our success. We believe that when people are empowered, inspired, and supported, they create extraordinary results.</p>
+                <cite>— Ayush Sen, Founder</cite>
+            </blockquote>
+        </div>
+    </div>
+</section>
+
+<!-- Join Our Team Section -->
+<section class="join-team-section py-6">
+    <div class="join-team-bg"></div>
+    <div class="container position-relative">
+        <div class="join-team-wrapper">
+            <div class="join-team-content" data-aos="fade-right">
+                <div class="badge bg-primary-soft mb-3">Careers</div>
+                <h2 class="section-title">Join Our <span class="text-gradient">Innovative Team</span></h2>
+                <p class="lead mb-4">Are you passionate about technology and innovation? We're always looking for talented individuals to join our growing team.</p>
+                
+                <div class="join-team-benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Exciting Projects</h4>
+                            <p>Work on cutting-edge technologies and challenging projects</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Growth Opportunities</h4>
+                            <p>Clear career paths and professional development</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Supportive Culture</h4>
+                            <p>Inclusive environment that values diverse perspectives</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="join-team-cta mt-5">
+                    <a href="{% url 'careers:careers_list' %}" class="btn btn-primary btn-lg">View Open Positions</a>
+                    <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg ms-3">Contact Us</a>
+                </div>
+            </div>
+            
+            <div class="join-team-image" data-aos="fade-left">
+                <img src="{% static 'images/join-team.png' %}" alt="Join Our Team" class="img-fluid">
+                <div class="floating-card floating-card-1">
+                    <div class="floating-card-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="floating-card-text">Innovative Tech Stack</div>
+                </div>
+                <div class="floating-card floating-card-2">
+                    <div class="floating-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="floating-card-text">Collaborative Teams</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center" data-aos="zoom-in">
+        <h2 class="mb-4">Want to Work with Our Team?</h2>
+        <p class="lead mb-4">Get in touch to discuss how we can help with your project.</p>
+        <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Contact Us</a>
+    </div>
+</section>
+{% endblock %}

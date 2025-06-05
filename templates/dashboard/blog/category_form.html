@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}
+{% if category %}Edit Category: {{ category.name }}{% else %}Create New Category{% endif %}
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'dashboard:categories_list' %}" class="btn btn-outline-primary">
+    <i class="fas fa-arrow-left"></i> Back to Categories
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="form-card">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="name" class="form-label required">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ category.name|default:'' }}" required>
+                    <div class="form-text">The name of the category as it will appear on the site.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="slug" class="form-label required">Slug</label>
+                    <input type="text" class="form-control" id="slug" name="slug" value="{{ category.slug|default:'' }}" required>
+                    <div class="form-text">URL-friendly version of the name. Use lowercase letters, numbers, and hyphens only.</div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3">{{ category.description|default:'' }}</textarea>
+                    <div class="form-text">A brief description of the category (optional).</div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" id="cancelButton">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        {% if category %}Update Category{% else %}Create Category{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-generate slug from name
+    document.getElementById('name').addEventListener('keyup', function() {
+        // Only generate slug if it's a new category or if the slug is empty
+        if (!document.getElementById('slug').value.trim()) {
+            const name = this.value;
+            const slug = name.toLowerCase()
+                .replace(/[^\w\s-]/g, '')  // Remove special chars except space and hyphen
+                .replace(/\s+/g, '-')      // Replace spaces with hyphens
+                .replace(/-+/g, '-');      // Replace multiple hyphens with single hyphen
+            
+            document.getElementById('slug').value = slug;
+        }
+    });
+    
+    // Cancel button event listener
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        window.location.href = '{% url "dashboard:categories_list" %}';
+    });
+</script>
+{% endblock %}

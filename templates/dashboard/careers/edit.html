@@ -1,0 +1,170 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Edit Job Listing: {{ job.title }}{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'dashboard:careers_list' %}" class="btn btn-outline-primary">
+    <i class="fas fa-arrow-left"></i> Back to Job Listings
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .required::after {
+        content: "*";
+        color: red;
+        margin-left: 4px;
+    }
+    
+    .ql-editor {
+        min-height: 150px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="title" class="form-label required">Job Title</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ job.title }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="slug" class="form-label required">Slug</label>
+                    <input type="text" class="form-control" id="slug" name="slug" value="{{ job.slug }}" required>
+                    <div class="form-text">URL-friendly version of the title. Use lowercase letters, numbers, and hyphens only.</div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="location" class="form-label required">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ job.location }}" required>
+                    <div class="form-text">e.g., "Remote", "New York, NY", "Hybrid - London"</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="employment_type" class="form-label required">Job Type</label>
+                    <select class="form-select" id="employment_type" name="employment_type" required>
+                        <option value="">Select job type</option>
+                        <option value="full_time" {% if job.employment_type == 'full_time' %}selected{% endif %}>Full Time</option>
+                        <option value="part_time" {% if job.employment_type == 'part_time' %}selected{% endif %}>Part Time</option>
+                        <option value="contract" {% if job.employment_type == 'contract' %}selected{% endif %}>Contract</option>
+                        <option value="internship" {% if job.employment_type == 'internship' %}selected{% endif %}>Internship</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3 form-check mt-4">
+                    <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {% if job.is_active %}checked{% endif %}>
+                    <label class="form-check-label" for="is_active">Active</label>
+                    <div class="form-text">Inactive job listings will not be displayed on the website.</div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="text-muted small">
+                        <p class="mb-1">Created: {{ job.created_at|date:"M d, Y" }}</p>
+                        <p class="mb-0">Applications: {{ job.applications.count }}</p>
+                    </div>
+                    <div>
+                        <a href="{% url 'dashboard:careers_delete' job.id %}" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="description" class="form-label required">Job Description</label>
+            <input type="hidden" id="description-input" name="description" value="{{ job.description|safe }}">
+            <div id="description-editor" class="quill-editor" data-input="description-input"></div>
+            <div class="form-text">Provide a general overview of the role.</div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="responsibilities" class="form-label required">Responsibilities</label>
+            <input type="hidden" id="responsibilities-input" name="responsibilities" value="{{ job.responsibilities|safe }}">
+            <div id="responsibilities-editor" class="quill-editor" data-input="responsibilities-input"></div>
+            <div class="form-text">List the key responsibilities and duties of this role.</div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="requirements" class="form-label required">Requirements</label>
+            <input type="hidden" id="requirements-input" name="requirements" value="{{ job.requirements|safe }}">
+            <div id="requirements-editor" class="quill-editor" data-input="requirements-input"></div>
+            <div class="form-text">List the skills, qualifications, and experience required for this role.</div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="benefits" class="form-label">Benefits</label>
+            <input type="hidden" id="benefits-input" name="benefits" value="{{ job.benefits|safe }}">
+            <div id="benefits-editor" class="quill-editor" data-input="benefits-input"></div>
+            <div class="form-text">List the benefits and perks offered with this position (optional).</div>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-secondary" id="cancel-btn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add cancel button functionality
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        window.location.href = '{% url "dashboard:careers_list" %}';
+    });
+    // Auto-generate slug from title for new jobs only
+    document.getElementById('title').addEventListener('keyup', function() {
+        // Only generate slug if it's a new job or if the slug is empty
+        if (document.getElementById('slug').value.trim() === '') {
+            const title = this.value;
+            const slug = title.toLowerCase()
+                .replace(/[^\w\s-]/g, '')  // Remove special chars except space and hyphen
+                .replace(/\s+/g, '-')      // Replace spaces with hyphens
+                .replace(/-+/g, '-');      // Replace multiple hyphens with single hyphen
+            
+            document.getElementById('slug').value = slug;
+        }
+    });
+    
+    // Initialize Quill editors
+    document.addEventListener('DOMContentLoaded', function() {
+        const editorIds = ['description', 'responsibilities', 'requirements', 'benefits'];
+        
+        editorIds.forEach(id => {
+            const editorElement = document.getElementById(`${id}-editor`);
+            const inputField = document.getElementById(`${id}-input`);
+            
+            if (editorElement && inputField) {
+                const quill = new Quill(editorElement, {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered'}, { list: 'bullet' }],
+                            ['clean']
+                        ]
+                    }
+                });
+                
+                // Set initial content
+                quill.root.innerHTML = inputField.value;
+                
+                // Update hidden input before form submission
+                const form = inputField.closest('form');
+                form.addEventListener('submit', function() {
+                    inputField.value = quill.root.innerHTML;
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

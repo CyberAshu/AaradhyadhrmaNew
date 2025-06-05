@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="offline-section py-5">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="error-img mb-5">
+                    <img src="{% static 'images/offline.svg' %}" alt="Offline" class="img-fluid">
+                </div>
+                <h1 class="display-1 fw-bold mb-3">Offline</h1>
+                <h2 class="mb-4">No Internet Connection</h2>
+                <p class="lead mb-5">It seems like you've lost your internet connection. Please check your connection and try again.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <button onclick="window.location.reload()" class="btn btn-primary btn-lg">Try Again</button>
+                    <a href="{% url 'core:home' %}" class="btn btn-outline-primary btn-lg">Go to Homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Simple periodic check to see if we're back online
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkConnectionStatus = () => {
+            if (navigator.onLine) {
+                document.querySelector('.offline-section').classList.add('fade-out');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        };
+        
+        // Check every 5 seconds
+        setInterval(checkConnectionStatus, 5000);
+        
+        // Also check when user explicitly goes back online
+        window.addEventListener('online', checkConnectionStatus);
+    });
+</script>
+
+<style>
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    .fade-out {
+        animation: fadeOut 1s forwards;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a154b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6e8fff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#25e0a0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Clean square logo with subtle rounded corners -->
+  <rect width="70" height="70" rx="10" ry="10" fill="url(#logo-gradient)" y="5" x="5"/>
+  <!-- Elegant A letter with proper positioning -->
+  <text x="40" y="55" font-family="Helvetica, Arial, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" fill="#ffffff">A</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6e8fff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#25e0a0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="150" cy="150" r="150" fill="#f8f9fa"/>
+  <circle cx="150" cy="120" r="70" fill="#e9ecef"/>
+  <circle cx="150" cy="105" r="40" fill="#ced4da"/>
+  <path d="M60,270 C60,210 240,210 240,270 Q240,300 150,300 Q60,300 60,270" fill="#e9ecef"/>
+  <text x="150" y="165" font-family="Arial" font-size="20" text-anchor="middle" fill="#495057">Ayush Sen</text>
+</svg>

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- About Hero Section -->
+<section class="about-hero-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                <h1 class="display-4 fw-bold mb-4">About Aaradhyadhrma</h1>
+                <p class="lead mb-4">Where ancient wisdom meets modern technology solutions.</p>
+                <p class="mb-4">At Aaradhyadhrma, we believe in combining time-tested principles with cutting-edge innovation to create software solutions that truly make a difference.</p>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                <img src="{% static 'images/about-hero.png' %}" alt="About Aaradhyadhrma" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="our-story-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Our Story</h2>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2" data-aos="fade-left">
+                <h3 class="mb-4">From Vision to Reality</h3>
+                <p>Aaradhyadhrma was founded in 2023 with a clear vision: to create software solutions that embody both ancient wisdom and modern technological excellence. Our name, derived from Sanskrit roots, represents our commitment to integrity, wisdom, and righteous action.</p>
+                <p>What began as a small team of passionate developers has grown into a dynamic company delivering innovative solutions across various sectors. Throughout our journey, we've remained committed to our core values and the belief that technology should enhance human potential, not replace it.</p>
+            </div>
+            <div class="col-lg-6 order-lg-1" data-aos="fade-right">
+                <img src="{% static 'images/our-story.png' %}" alt="Our Story" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Vision & Mission Section -->
+<section class="vision-mission-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Vision & Mission</h2>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Vision Card -->
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body p-4">
+                        <div class="icon-box mb-4">
+                            <i class="fas fa-eye fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="card-title mb-3">Our Vision</h3>
+                        <p class="card-text">To be the bridge between timeless wisdom and modern technology, creating software solutions that are not just technically excellent but also ethically sound and humanely designed.</p>
+                        <p class="card-text">We envision a world where technology serves humanity's highest potential, guided by principles that have stood the test of time.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mission Card -->
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body p-4">
+                        <div class="icon-box mb-4">
+                            <i class="fas fa-bullseye fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="card-title mb-3">Our Mission</h3>
+                        <p class="card-text">To deliver innovative, high-quality software solutions that solve real-world problems while upholding the values of integrity, excellence, and respect for all stakeholders.</p>
+                        <p class="card-text">We commit to continuous learning, ethical practices, and creating technology that enhances human connection rather than diminishing it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="values-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Our Core Values</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">The principles that guide everything we do</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Value 1 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="value-card text-center h-100">
+                    <div class="icon-box mb-3">
+                        <i class="fas fa-balance-scale fa-3x"></i>
+                    </div>
+                    <h3>Integrity</h3>
+                    <p>We uphold the highest standards of honesty and ethical conduct in all our interactions.</p>
+                </div>
+            </div>
+            
+            <!-- Value 2 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="value-card text-center h-100">
+                    <div class="icon-box mb-3">
+                        <i class="fas fa-star fa-3x"></i>
+                    </div>
+                    <h3>Excellence</h3>
+                    <p>We strive for excellence in everything we create, never compromising on quality.</p>
+                </div>
+            </div>
+            
+            <!-- Value 3 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="value-card text-center h-100">
+                    <div class="icon-box mb-3">
+                        <i class="fas fa-lightbulb fa-3x"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We embrace creativity and continuously seek new ways to solve complex challenges.</p>
+                </div>
+            </div>
+            
+            <!-- Value 4 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="value-card text-center h-100">
+                    <div class="icon-box mb-3">
+                        <i class="fas fa-users fa-3x"></i>
+                    </div>
+                    <h3>Collaboration</h3>
+                    <p>We believe in the power of teamwork and partnerships to achieve extraordinary results.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Founder's Note Section -->
+<section class="founders-note-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Founder's Note</h2>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        
+        <div class="row align-items-center">
+            <div class="col-lg-4" data-aos="fade-right">
+                <div class="founder-image mb-4 mb-lg-0">
+                    <img src="{% static 'images/founder_image.png' %}" alt="Ayush Sen - Founder" class="img-fluid rounded-circle" style="width: 250px; height: 250px; object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-8" data-aos="fade-left">
+                <div class="founder-message">
+                    <p class="lead mb-4">"At Aaradhyadhrma, we believe that the best technology solutions come from a harmonious blend of ancient wisdom and modern innovation. This philosophy guides everything we do."</p>
+                    <p>Technology is advancing at an unprecedented pace, but the principles that have guided human progress for millennia remain constant. Our approach is to harness the power of cutting-edge technology while staying grounded in timeless values like integrity, excellence, and respect for all stakeholders.</p>
+                    <p>We're committed to creating software that not only meets technical requirements but also enriches the human experience. Whether we're developing AI applications, custom software solutions, or providing technical consultancy, our goal is to deliver work that we can be proud of and that genuinely makes a positive difference.</p>
+                    <p>Thank you for taking the time to learn about our journey. We look forward to the possibility of working together to bring your vision to life.</p>
+                    <div class="founder-signature mt-4">
+                        <h4 class="mb-0">Ayush Sen</h4>
+                        <p>Founder & Lead Developer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center" data-aos="zoom-in">
+        <h2 class="mb-4">Ready to Work with Us?</h2>
+        <p class="lead mb-4">Let's create something amazing together.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'core:services' %}" class="btn btn-light">Our Services</a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

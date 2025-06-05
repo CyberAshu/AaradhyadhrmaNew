@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <rect width="300" height="300" fill="#f8f9fa"/>
+  <circle cx="150" cy="100" r="50" fill="#ff6b6b" opacity="0.7"/>
+  <path d="M100,280 C100,200 200,200 200,280" fill="#ff6b6b" opacity="0.5"/>
+  <text x="150" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Team Culture</text>
+</svg>

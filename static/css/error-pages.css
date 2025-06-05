@@ -1,0 +1,134 @@
+/* Error Pages Styling */
+
+.error-404-section,
+.error-500-section,
+.offline-section {
+    padding: 8rem 0;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.error-img {
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.error-img img {
+    max-height: 300px;
+    width: auto;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.error-404-section h1,
+.error-500-section h1,
+.offline-section h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.error-404-section h2,
+.error-500-section h2,
+.offline-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.error-404-section p,
+.error-500-section p,
+.offline-section p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    color: var(--gray-color);
+}
+
+.error-404-section .btn,
+.error-500-section .btn,
+.offline-section .btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+/* Dark Mode Styles */
+.dark-mode .error-404-section p,
+.dark-mode .error-500-section p,
+.dark-mode .offline-section p {
+    color: #a0aec0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .error-404-section h1,
+    .error-500-section h1,
+    .offline-section h1 {
+        font-size: 4rem;
+    }
+    
+    .error-404-section h2,
+    .error-500-section h2,
+    .offline-section h2 {
+        font-size: 1.75rem;
+    }
+    
+    .error-404-section p,
+    .error-500-section p,
+    .offline-section p {
+        font-size: 1rem;
+    }
+    
+    .error-img img {
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .error-404-section,
+    .error-500-section,
+    .offline-section {
+        padding: 5rem 0;
+    }
+    
+    .error-404-section h1,
+    .error-500-section h1,
+    .offline-section h1 {
+        font-size: 3rem;
+    }
+    
+    .error-img img {
+        max-height: 150px;
+    }
+    
+    .error-404-section .btn,
+    .error-500-section .btn,
+    .offline-section .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .error-404-section .d-flex,
+    .error-500-section .d-flex,
+    .offline-section .d-flex {
+        flex-direction: column;
+    }
+}

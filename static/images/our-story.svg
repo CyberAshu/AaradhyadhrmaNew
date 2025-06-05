@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="300" viewBox="0 0 500 300">
+  <rect width="500" height="300" fill="#f8f9fa"/>
+  <text x="250" y="150" font-family="Arial" font-size="24" text-anchor="middle" fill="#6e8fff">Our Story</text>
+  <path d="M150,100 L350,100 L350,200 L150,200 Z" stroke="#6e8fff" stroke-width="3" fill="none"/>
+  <path d="M170,120 L330,120 M170,140 L330,140 M170,160 L330,160 M170,180 L330,180" stroke="#6e8fff" stroke-width="2"/>
+</svg>

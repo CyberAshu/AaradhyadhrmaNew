@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="10" fill="#326ce5"/>
+  <text x="50" y="75" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle" fill="white">Kubernetes</text>
+  <path d="M50,25 L35,35 L35,65 L50,75 L65,65 L65,35 Z" stroke="white" stroke-width="2" fill="none"/>
+  <path d="M50,25 L50,75 M35,50 L65,50" stroke="white" stroke-width="2" fill="none"/>
+</svg>

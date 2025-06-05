@@ -1,0 +1,79 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
+
+{% block account_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block account_content %}
+<div class="login-signup-section">
+  <div class="text-center mb-4">
+    <img src="{% static 'images/login-illustration.svg' %}" alt="Login" class="img-fluid mb-4" style="max-height: 150px;">
+    <h2>{% trans "Sign In to Your Account" %}</h2>
+  </div>
+
+  {% get_providers as socialaccount_providers %}
+  
+  {% if socialaccount_providers %}
+  <div class="social-login">
+    <p>{% trans "Sign in with one of your existing accounts:" %}</p>
+    
+    <div class="d-grid gap-2 mb-3">
+      {% for provider in socialaccount_providers %}
+        <a href="{% provider_login_url provider.id process='login' %}" class="btn btn-outline-secondary">
+          <i class="fab fa-{{ provider.id }}"></i> {% trans "Sign in with" %} {{ provider.name }}
+        </a>
+      {% endfor %}
+    </div>
+    
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-text">{% trans "OR" %}</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+  {% endif %}
+  
+  <form class="login" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      <p>{% trans "The username and/or password you specified are not correct." %}</p>
+    </div>
+    {% endif %}
+    
+    <div class="mb-3">
+      <label for="id_login" class="form-label">{% trans "Username or Email" %}</label>
+      <input type="text" name="login" placeholder="{% trans 'Username or email' %}" autocomplete="username" class="form-control" id="id_login" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="id_password" class="form-label">{% trans "Password" %}</label>
+      <input type="password" name="password" placeholder="{% trans 'Password' %}" autocomplete="current-password" class="form-control" id="id_password" required>
+    </div>
+    
+    <div class="mb-3 form-check">
+      <input type="checkbox" name="remember" class="form-check-input" id="id_remember">
+      <label class="form-check-label" for="id_remember">{% trans "Remember Me" %}</label>
+    </div>
+    
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    
+    <div class="d-grid gap-2 mb-3">
+      <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+    </div>
+  </form>
+  
+  <div class="mt-4">
+    <a href="{% url 'account_reset_password' %}" class="text-primary">{% trans "Forgot Password?" %}</a>
+  </div>
+  
+  <div class="mt-4">
+    <p>{% trans "Don't have an account?" %} <a href="{% url 'account_signup' %}" class="text-primary">{% trans "Sign up" %}</a></p>
+  </div>
+</div>
+{% endblock %}

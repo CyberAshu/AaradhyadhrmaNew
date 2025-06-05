@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title|default:"Dashboard - Aaradhyadhrma Admin" }}{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Quill editor CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            --primary-color: #4e73df;
+            --primary-color-dark: #3a56b0;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+            --secondary-color: #858796;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+        }
+        
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar styles */
+        #sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-color) 10%, var(--primary-color-dark) 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1000;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        #sidebar.collapsed {
+            margin-left: calc(var(--sidebar-width) * -1);
+        }
+        
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        #sidebar ul li a {
+            padding: 15px 20px;
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        #sidebar ul li a:hover,
+        #sidebar ul li.active > a {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+        
+        #sidebar ul li i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        #sidebar .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.1);
+            font-size: 0.8em;
+        }
+        
+        /* Content styles */
+        #content {
+            margin-left: var(--sidebar-width);
+            padding-top: var(--header-height);
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+        
+        #content.full-width {
+            margin-left: 0;
+        }
+        
+        /* Header styles */
+        #header {
+            height: var(--header-height);
+            background-color: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: var(--sidebar-width);
+            z-index: 999;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        #header.full-width {
+            left: 0;
+        }
+        
+        /* Dashboard cards */
+        .dashboard-card {
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            border-left: 0.25rem solid;
+        }
+        
+        .dashboard-card.primary {
+            border-left-color: var(--primary-color);
+        }
+        
+        .dashboard-card.success {
+            border-left-color: var(--success-color);
+        }
+        
+        .dashboard-card.info {
+            border-left-color: var(--info-color);
+        }
+        
+        .dashboard-card.warning {
+            border-left-color: var(--warning-color);
+        }
+        
+        .dashboard-card.danger {
+            border-left-color: var(--danger-color);
+        }
+        
+        .dashboard-card-icon {
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        
+        /* Tables */
+        .table-responsive {
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            background-color: white;
+        }
+        
+        /* Forms */
+        .form-card {
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            background-color: white;
+            padding: 20px;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-color-dark);
+            border-color: var(--primary-color-dark);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: calc(var(--sidebar-width) * -1);
+            }
+            
+            #sidebar.active {
+                margin-left: 0;
+            }
+            
+            #content {
+                margin-left: 0;
+            }
+            
+            #header {
+                left: 0;
+            }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h4>Aaradhyadhrma Admin</h4>
+        </div>
+        
+        <ul class="list-unstyled">
+            <li {% if request.path == '/dashboard/' %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:home' %}">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
+            <li {% if '/dashboard/blog/' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:blog_list' %}">
+                    <i class="fas fa-blog"></i> Blog Posts
+                </a>
+            </li>
+            <li {% if '/dashboard/categories/' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:categories_list' %}">
+                    <i class="fas fa-folder"></i> Categories
+                </a>
+            </li>
+            <li {% if '/dashboard/team/' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:team_list' %}">
+                    <i class="fas fa-users"></i> Team Members
+                </a>
+            </li>
+            <li {% if '/dashboard/careers/' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:careers_list' %}">
+                    <i class="fas fa-briefcase"></i> Careers
+                </a>
+            </li>
+            <li {% if '/dashboard/users/' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:users_list' %}">
+                    <i class="fas fa-user"></i> Users
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'core:home' %}" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> View Site
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <p class="mb-0">Logged in as: {{ request.user.username }}</p>
+            <a href="{% url 'account_logout' %}" class="text-white">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Header -->
+    <header id="header">
+        <button id="sidebarToggle" class="btn btn-link">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="ms-auto d-flex align-items-center">
+            <div class="dropdown me-3">
+                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-bell"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                    <li><span class="dropdown-item-text">No new notifications</span></li>
+                </ul>
+            </div>
+            
+            <div class="dropdown">
+                <a class="btn btn-link dropdown-toggle d-flex align-items-center" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="me-2 d-none d-md-inline">{{ request.user.username }}</span>
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        {{ request.user.username|slice:":1"|upper }}
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Content -->
+    <div id="content">
+        <div class="container-fluid py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0 text-gray-800">{% block page_title %}{{ page_title|default:"Dashboard" }}{% endblock %}</h1>
+                {% block page_actions %}{% endblock %}
+            </div>
+            
+            {% if messages %}
+            <div class="messages mb-4">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Quill editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    
+    <script>
+        // Toggle sidebar
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('content').classList.toggle('full-width');
+            document.getElementById('header').classList.toggle('full-width');
+        });
+        
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // Handle Quill editor initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const quillEditors = document.querySelectorAll('.quill-editor');
+            quillEditors.forEach(function(editorElement) {
+                if (editorElement) {
+                    const quill = new Quill(editorElement, {
+                        theme: 'snow',
+                        modules: {
+                            toolbar: [
+                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                ['bold', 'italic', 'underline', 'strike'],
+                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                [{ 'script': 'sub'}, { 'script': 'super' }],
+                                [{ 'indent': '-1'}, { 'indent': '+1' }],
+                                [{ 'align': [] }],
+                                ['link', 'image', 'video'],
+                                ['clean']
+                            ]
+                        }
+                    });
+                    
+                    // Find the related hidden input
+                    const inputField = document.getElementById(editorElement.getAttribute('data-input'));
+                    
+                    if (inputField) {
+                        // Set initial content
+                        quill.root.innerHTML = inputField.value;
+                        
+                        // Update hidden input before form submission
+                        const form = inputField.closest('form');
+                        form.addEventListener('submit', function() {
+                            inputField.value = quill.root.innerHTML;
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

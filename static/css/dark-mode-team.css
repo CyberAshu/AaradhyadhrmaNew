@@ -1,0 +1,39 @@
+/* Dark Mode Styles for Team Member Detail Page */
+[data-bs-theme="dark"] .team-member-detail .section-title {
+    color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .team-member-detail .skill-name {
+    color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .team-member-detail .progress {
+    background-color: var(--bs-dark-bg-subtle);
+}
+
+[data-bs-theme="dark"] .team-member-detail .project-card {
+    background-color: var(--bs-dark-bg-subtle);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .team-member-detail .project-title {
+    color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .team-member-detail .project-description {
+    color: var(--bs-secondary-color);
+}
+
+[data-bs-theme="dark"] .team-member-detail .project-tech {
+    color: var(--primary-color);
+}
+
+/* Fix for the Technical Skills and Recent Projects headings */
+[data-bs-theme="dark"] .team-member-detail h2.section-title {
+    color: var(--bs-light);
+}
+
+/* Fix for progress bars in dark mode */
+[data-bs-theme="dark"] .team-member-detail .progress-bar {
+    background-color: var(--primary-color);
+}

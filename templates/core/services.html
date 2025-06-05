@@ -1,0 +1,643 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Services Hero Section -->
+<section class="services-hero-section py-5">
+    <div class="hero-bg-pattern"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                <div class="badge bg-primary-soft mb-3">Expert Solutions</div>
+                <h1 class="display-4 fw-bold mb-4">Transforming Ideas Into <span class="text-gradient">Digital Reality</span></h1>
+                <p class="lead mb-4">Comprehensive technology solutions tailored to your unique business challenges.</p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <a href="#main-services" class="btn btn-primary btn-lg">Explore Services</a>
+                    <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg">Get in Touch</a>
+                </div>
+                <div class="service-stats d-flex flex-wrap gap-4 mt-5">
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Client Satisfaction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                <div class="hero-image-container">
+                    <img src="{% static 'images/servicehero.png' %}" alt="Our Services" class="img-fluid">
+                    <div class="floating-badge badge-1">Custom Software</div>
+                    <div class="floating-badge badge-2">AI/ML Solutions</div>
+                    <div class="floating-badge badge-3">Cloud Services</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Services Section -->
+<section id="main-services" class="main-services-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <div class="badge bg-primary-soft mb-3">Our Expertise</div>
+                <h2 class="section-title">Services That Drive <span class="text-gradient">Results</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">Innovative solutions tailored to accelerate your digital transformation</p>
+            </div>
+        </div>
+        
+        <!-- Service Navigation -->
+        <div class="service-nav-container mb-5" data-aos="fade-up">
+            <div class="service-nav">
+                <button class="service-nav-btn active" data-service="custom-software">
+                    <i class="fas fa-code"></i>
+                    <span>Custom Software</span>
+                </button>
+                <button class="service-nav-btn" data-service="ai-ml">
+                    <i class="fas fa-brain"></i>
+                    <span>AI/ML Solutions</span>
+                </button>
+                <button class="service-nav-btn" data-service="fullstack">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Full-stack Development</span>
+                </button>
+                <button class="service-nav-btn" data-service="consultancy">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Technology Consultancy</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Service Content Container -->
+        <div class="service-content-container">
+            <!-- Service 1: Custom Software Development -->
+            <div class="service-content-panel active" id="custom-software" data-aos="fade-up">
+                <div class="service-card">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="service-card-body">
+                                <div class="service-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3>Custom Software Development</h3>
+                                <p class="lead">Tailored solutions that address your unique business challenges.</p>
+                                <p>We design and develop custom software that's scalable, secure, and user-friendly, helping you streamline operations and achieve your business goals.</p>
+                                
+                                <div class="service-features">
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Enterprise Applications</h4>
+                                            <p>Robust solutions for complex business needs</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Mobile Applications</h4>
+                                            <p>Native and cross-platform mobile solutions</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-sync"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Legacy System Modernization</h4>
+                                            <p>Update outdated systems with modern technology</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <a href="{% url 'core:contact' %}" class="btn btn-primary mt-4">Request a Consultation</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="service-card-image">
+                                <img src="{% static 'images/services/custom-software.png' %}" alt="Custom Software Development" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2: AI/ML & Generative AI -->
+            <div class="service-content-panel" id="ai-ml" data-aos="fade-up">
+                <div class="service-card">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="service-card-body">
+                                <div class="service-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h3>AI/ML & Generative AI</h3>
+                                <p class="lead">Harness the power of artificial intelligence for your business.</p>
+                                <p>Our AI solutions help you extract valuable insights from your data, automate complex processes, and create innovative applications using the latest in generative AI technology.</p>
+                                
+                                <div class="service-features">
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Predictive Analytics</h4>
+                                            <p>Forecast trends and make data-driven decisions</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Natural Language Processing</h4>
+                                            <p>Text analysis and conversational AI solutions</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Generative AI Applications</h4>
+                                            <p>Create content and solutions with AI assistance</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <a href="{% url 'core:contact' %}" class="btn btn-primary mt-4">Request a Consultation</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="service-card-image">
+                                <img src="{% static 'images/services/ai-ml.png' %}" alt="AI/ML & Generative AI" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3: Full-stack Development -->
+            <div class="service-content-panel" id="fullstack" data-aos="fade-up">
+                <div class="service-card">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="service-card-body">
+                                <div class="service-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <h3>Full-stack Development</h3>
+                                <p class="lead">End-to-end solutions from frontend to backend.</p>
+                                <p>Our full-stack development services ensure seamless integration and optimal performance across all layers of your application, creating cohesive and powerful digital experiences.</p>
+                                
+                                <div class="service-features">
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fab fa-python"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Python Backends</h4>
+                                            <p>Django and Flask for robust server-side applications</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fab fa-react"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Modern Frontend</h4>
+                                            <p>React, Angular, and Vue for interactive UIs</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-database"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Database Design</h4>
+                                            <p>Optimized data structures for performance</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <a href="{% url 'core:contact' %}" class="btn btn-primary mt-4">Request a Consultation</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="service-card-image">
+                                <img src="{% static 'images/services/fullstack.png' %}" alt="Full-stack Development" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4: Technology Consultancy -->
+            <div class="service-content-panel" id="consultancy" data-aos="fade-up">
+                <div class="service-card">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="service-card-body">
+                                <div class="service-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3>Technology Consultancy</h3>
+                                <p class="lead">Strategic guidance for your technology decisions.</p>
+                                <p>Our experienced consultants help you navigate complex technology landscapes, providing expert advice on architecture, implementation strategies, and technology selection.</p>
+                                
+                                <div class="service-features">
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-digital-tachograph"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Digital Transformation</h4>
+                                            <p>Strategies to modernize your business processes</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-sitemap"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Architecture Design</h4>
+                                            <p>Scalable and maintainable system blueprints</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                        <div class="feature-text">
+                                            <h4>Security Assessments</h4>
+                                            <p>Identify and address vulnerabilities</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <a href="{% url 'core:contact' %}" class="btn btn-primary mt-4">Request a Consultation</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="service-card-image">
+                                <img src="{% static 'images/services/consultancy.png' %}" alt="Technology Consultancy" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Process Section -->
+<section class="our-process-section py-5">
+    <div class="process-bg-pattern"></div>
+    <div class="container position-relative">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <div class="badge bg-primary-soft mb-3">How We Work</div>
+                <h2 class="section-title">Our Development <span class="text-gradient">Process</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">A structured approach to delivering exceptional results</p>
+            </div>
+        </div>
+        
+        <div class="process-timeline" data-aos="fade-up">
+            <!-- Step 1 -->
+            <div class="process-step">
+                <div class="process-step-content">
+                    <div class="process-step-number">01</div>
+                    <div class="process-step-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Discovery</h3>
+                    <p>We begin by deeply understanding your business goals, requirements, and challenges through collaborative discussions.</p>
+                    <ul class="process-step-list">
+                        <li>Requirement gathering</li>
+                        <li>Stakeholder interviews</li>
+                        <li>Problem definition</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="process-step">
+                <div class="process-step-content">
+                    <div class="process-step-number">02</div>
+                    <div class="process-step-icon">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3>Planning</h3>
+                    <p>We create a comprehensive roadmap, architecture design, and project plan tailored to your specific needs.</p>
+                    <ul class="process-step-list">
+                        <li>Solution architecture</li>
+                        <li>Technical specifications</li>
+                        <li>Project timeline</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="process-step">
+                <div class="process-step-content">
+                    <div class="process-step-number">03</div>
+                    <div class="process-step-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Development</h3>
+                    <p>Our skilled developers build your solution using agile methodologies with regular updates and feedback cycles.</p>
+                    <ul class="process-step-list">
+                        <li>Iterative development</li>
+                        <li>Quality assurance</li>
+                        <li>Regular demos</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="process-step">
+                <div class="process-step-content">
+                    <div class="process-step-number">04</div>
+                    <div class="process-step-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Delivery</h3>
+                    <p>We deploy your solution, provide thorough documentation, and offer ongoing support and maintenance services.</p>
+                    <ul class="process-step-list">
+                        <li>Deployment</li>
+                        <li>Knowledge transfer</li>
+                        <li>Continuous support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technologies Section -->
+<section class="technologies-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Technologies We Use</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">Cutting-edge tools and frameworks for optimal results</p>
+            </div>
+        </div>
+        
+                <!-- Technology Categories -->
+        <div class="row g-4">
+            <!-- Programming Languages -->
+            <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="tech-category-section">
+                    <h3 class="tech-category-title">Programming Languages</h3>
+                    <div class="tech-scroll-container">
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/python.svg' %}" alt="Python">
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/java.svg' %}" alt="Java">
+                            <span>Java</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/javascript.svg' %}" alt="JavaScript">
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/typescript.svg' %}" alt="TypeScript">
+                            <span>TypeScript</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/python.svg' %}" alt="Python">
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/java.svg' %}" alt="Java">
+                            <span>Java</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/javascript.svg' %}" alt="JavaScript">
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/typescript.svg' %}" alt="TypeScript">
+                            <span>TypeScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Frameworks -->
+            <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="tech-category-section">
+                    <h3 class="tech-category-title">Frameworks</h3>
+                    <div class="tech-scroll-container reverse">
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/django.svg' %}" alt="Django">
+                            <span>Django</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/spring.svg' %}" alt="Spring">
+                            <span>Spring</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/react.svg' %}" alt="React">
+                            <span>React</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/angular.svg' %}" alt="Angular">
+                            <span>Angular</span>
+                        </div>
+                        <!-- Add duplicates for continuous scroll effect -->
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/django.svg' %}" alt="Django">
+                            <span>Django</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/spring.svg' %}" alt="Spring">
+                            <span>Spring</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Databases -->
+            <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="tech-category-section">
+                    <h3 class="tech-category-title">Databases</h3>
+                    <div class="tech-scroll-container">
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/postgresql.svg' %}" alt="PostgreSQL">
+                            <span>PostgreSQL</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/mysql.svg' %}" alt="MySQL">
+                            <span>MySQL</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/mongodb.svg' %}" alt="MongoDB">
+                            <span>MongoDB</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/redis.svg' %}" alt="Redis">
+                            <span>Redis</span>
+                        </div>
+                        <!-- Add duplicates for continuous scroll effect -->
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/postgresql.svg' %}" alt="PostgreSQL">
+                            <span>PostgreSQL</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/mysql.svg' %}" alt="MySQL">
+                            <span>MySQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cloud & DevOps -->
+            <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="tech-category-section">
+                    <h3 class="tech-category-title">Cloud & DevOps</h3>
+                    <div class="tech-scroll-container reverse">
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/aws.svg' %}" alt="AWS">
+                            <span>AWS</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/docker.svg' %}" alt="Docker">
+                            <span>Docker</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/kubernetes.svg' %}" alt="Kubernetes">
+                            <span>Kubernetes</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/github.svg' %}" alt="GitHub">
+                            <span>GitHub</span>
+                        </div>
+                        <!-- Add duplicates for continuous scroll effect -->
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/aws.svg' %}" alt="AWS">
+                            <span>AWS</span>
+                        </div>
+                        <div class="tech-card">
+                            <img src="{% static 'images/tech/docker.svg' %}" alt="Docker">
+                            <span>Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section - Optional, can be commented out if not needed -->
+<!--
+<section class="pricing-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Our Pricing Plans</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">Flexible options to suit your needs and budget</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Basic Plan --
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="pricing-card h-100">
+                    <div class="pricing-header">
+                        <h3>Basic</h3>
+                        <div class="price"><span>$</span>999<span>/project</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Single page application</li>
+                            <li><i class="fas fa-check"></i> Basic features</li>
+                            <li><i class="fas fa-check"></i> 2 weeks development time</li>
+                            <li><i class="fas fa-check"></i> 1 month support</li>
+                            <li class="disabled"><i class="fas fa-times"></i> Custom design</li>
+                            <li class="disabled"><i class="fas fa-times"></i> Advanced features</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="{% url 'core:contact' %}" class="btn btn-outline-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Standard Plan --
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="pricing-card h-100 featured">
+                    <div class="pricing-header">
+                        <h3>Standard</h3>
+                        <div class="price"><span>$</span>2,999<span>/project</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Multi-page application</li>
+                            <li><i class="fas fa-check"></i> Advanced features</li>
+                            <li><i class="fas fa-check"></i> 4 weeks development time</li>
+                            <li><i class="fas fa-check"></i> 3 months support</li>
+                            <li><i class="fas fa-check"></i> Custom design</li>
+                            <li class="disabled"><i class="fas fa-times"></i> AI/ML integration</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="{% url 'core:contact' %}" class="btn btn-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Premium Plan --
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="pricing-card h-100">
+                    <div class="pricing-header">
+                        <h3>Premium</h3>
+                        <div class="price"><span>$</span>5,999<span>/project</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Enterprise application</li>
+                            <li><i class="fas fa-check"></i> Premium features</li>
+                            <li><i class="fas fa-check"></i> 8 weeks development time</li>
+                            <li><i class="fas fa-check"></i> 6 months support</li>
+                            <li><i class="fas fa-check"></i> Custom design</li>
+                            <li><i class="fas fa-check"></i> AI/ML integration</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="{% url 'core:contact' %}" class="btn btn-outline-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center" data-aos="zoom-in">
+        <h2 class="mb-4">Ready to Discuss Your Project?</h2>
+        <p class="lead mb-4">Contact us today for a free consultation and quote.</p>
+        <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Get in Touch</a>
+    </div>
+</section>
+
+<!-- JavaScript for Service Tabs -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Service tabs functionality
+        const serviceNavBtns = document.querySelectorAll('.service-nav-btn');
+        const servicePanels = document.querySelectorAll('.service-content-panel');
+        
+        serviceNavBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and panels
+                serviceNavBtns.forEach(b => b.classList.remove('active'));
+                servicePanels.forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Show corresponding panel
+                const serviceId = btn.getAttribute('data-service');
+                document.getElementById(serviceId).classList.add('active');
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="10" fill="#0db7ed"/>
+  <text x="50" y="65" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Docker</text>
+  <rect x="25" y="35" width="15" height="15" fill="white" stroke="#0db7ed" stroke-width="1"/>
+  <rect x="45" y="35" width="15" height="15" fill="white" stroke="#0db7ed" stroke-width="1"/>
+  <rect x="65" y="35" width="15" height="15" fill="white" stroke="#0db7ed" stroke-width="1"/>
+  <rect x="25" y="20" width="15" height="15" fill="white" stroke="#0db7ed" stroke-width="1"/>
+  <rect x="45" y="20" width="15" height="15" fill="white" stroke="#0db7ed" stroke-width="1"/>
+</svg>

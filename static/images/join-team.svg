@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="300" viewBox="0 0 500 300">
+  <rect width="500" height="300" fill="#f8f9fa"/>
+  <text x="250" y="150" font-family="Arial" font-size="24" text-anchor="middle" fill="#6e8fff">Join Our Team</text>
+  <circle cx="200" cy="150" r="30" fill="#6e8fff" opacity="0.6"/>
+  <circle cx="250" cy="150" r="30" fill="#25e0a0" opacity="0.6"/>
+  <circle cx="300" cy="150" r="30" fill="#ff6b6b" opacity="0.6"/>
+</svg>

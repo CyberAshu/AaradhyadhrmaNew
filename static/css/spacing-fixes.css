@@ -1,0 +1,161 @@
+/* Spacing Fixes for Aaradhyadhrma Website */
+
+/* Global Spacing Improvements */
+.container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+section {
+    padding: 5rem 0;
+}
+
+/* Card Spacing */
+.card {
+    margin-bottom: 2rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Image Alignment Fixes */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.text-with-image {
+    display: flex;
+    align-items: center;
+}
+
+/* Team Member Cards */
+.team-card {
+    margin-bottom: 2rem;
+    height: 100%;
+}
+
+.team-card .card-body {
+    padding: 1.5rem;
+}
+
+.team-card img {
+    object-fit: cover;
+    height: 250px;
+    width: 100%;
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    margin-bottom: 2rem;
+    height: 100%;
+}
+
+.testimonial-card .card-body {
+    padding: 1.5rem;
+}
+
+.testimonial-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+/* Blog Cards */
+.blog-card {
+    margin-bottom: 2rem;
+    height: 100%;
+}
+
+.blog-card .card-body {
+    padding: 1.5rem;
+}
+
+.blog-card img {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+}
+
+/* Services Cards */
+.service-card {
+    margin-bottom: 2rem;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card .card-body {
+    padding: 2rem;
+}
+
+.service-card i {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+/* Form Spacing */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    padding: 0.75rem 1rem;
+}
+
+/* Button Spacing */
+.btn {
+    padding: 0.75rem 1.5rem;
+}
+
+.btn-group .btn {
+    margin-right: 0.5rem;
+}
+
+/* Mobile Spacing Adjustments */
+@media (max-width: 768px) {
+    section {
+        padding: 3rem 0;
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+    
+    .team-card img,
+    .blog-card img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    section {
+        padding: 2rem 0;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .team-card img,
+    .blog-card img {
+        height: 180px;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+}

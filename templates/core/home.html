@@ -1,0 +1,869 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Enhanced Hero Section -->
+<section class="hero-section">
+    <!-- Animated Background Elements -->
+    <div class="hero-bg-elements">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
+        <div class="hero-shape hero-shape-4"></div>
+        <div class="hero-particles" id="hero-particles"></div>
+    </div>
+    
+    <div class="container position-relative">
+        <!-- Floating Tech Icons -->
+        <div class="floating-tech-icons">
+            <div class="floating-icon" style="--delay: 0s; --top: 15%; --left: 10%;"><i class="fab fa-python"></i></div>
+            <div class="floating-icon" style="--delay: 1s; --top: 25%; --left: 5%;"><i class="fab fa-react"></i></div>
+            <div class="floating-icon" style="--delay: 2s; --top: 60%; --left: 8%;"><i class="fab fa-aws"></i></div>
+            <div class="floating-icon" style="--delay: 0.5s; --top: 20%; --right: 8%;"><i class="fab fa-node-js"></i></div>
+            <div class="floating-icon" style="--delay: 1.5s; --top: 70%; --right: 10%;"><i class="fab fa-java"></i></div>
+            <div class="floating-icon" style="--delay: 2.5s; --top: 40%; --right: 5%;"><i class="fas fa-database"></i></div>
+        </div>
+        
+        <div class="row align-items-center hero-content-row">
+            <!-- Hero Content -->
+            <div class="col-lg-6 hero-content" data-aos="fade-right">
+                <div class="hero-badge" data-aos="fade-up" data-aos-delay="100">Innovate • Transform • Excel</div>
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
+                    <span class="text-gradient">Ancient Wisdom,</span><br>
+                    <span class="hero-title-animated">Modern Solution</span>
+                </h1>
+                
+                <div class="typing-container mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <span class="static-text">We build </span>
+                    <span class="dynamic-text" id="typingText">innovative software solutions</span>
+                </div>
+                
+                <p class="hero-description" data-aos="fade-up" data-aos-delay="400">
+                    Transforming ideas into powerful software solutions with cutting-edge technologies and time-tested methodologies.
+                </p>
+                
+                <!-- Hero Stats -->
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="500">
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-value">10+</div>
+                        <div class="hero-stat-label">Years Experience</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-value">200+</div>
+                        <div class="hero-stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-value">98%</div>
+                        <div class="hero-stat-label">Client Satisfaction</div>
+                    </div>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="hero-cta" data-aos="fade-up" data-aos-delay="600">
+                    <a href="{% url 'core:services' %}" class="btn btn-primary btn-lg btn-glow">Explore Services</a>
+                    <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg btn-with-icon">
+                        <span>Get in Touch</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero 3D Image -->
+            <div class="col-lg-6 hero-image-container" data-aos="fade-left" data-aos-delay="200">
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-3d">
+                        <img src="{% static 'images/hero-image.png' %}" alt="Hero Image" class="img-fluid hero-main-image">
+                        <div class="hero-image-shadow"></div>
+                    </div>
+                    
+                    <!-- Floating Cards -->
+                    <div class="hero-floating-card hero-card-1" data-aos="fade-up" data-aos-delay="300">
+                        <div class="hero-card-icon"><i class="fas fa-code"></i></div>
+                        <div class="hero-card-text">Custom Software</div>
+                    </div>
+                    
+                    <div class="hero-floating-card hero-card-2" data-aos="fade-up" data-aos-delay="500">
+                        <div class="hero-card-icon"><i class="fas fa-brain"></i></div>
+                        <div class="hero-card-text">AI Solutions</div>
+                    </div>
+                    
+                    <div class="hero-floating-card hero-card-3" data-aos="fade-up" data-aos-delay="700">
+                        <div class="hero-card-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="hero-card-text">Mobile Apps</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="800">
+            <div class="scroll-text">Scroll to explore</div>
+            <div class="scroll-icon"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech Stack Section -->
+<section class="tech-stack-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">Our Technology Stack</h2>
+            <p class="section-subtitle">Cutting-edge tools powering our solutions</p>
+        </div>
+        
+        <div class="tech-stack-container" data-aos="fade-up">
+            <!-- Tech Stack Tabs -->
+            <div class="tech-tabs">
+                <button class="tech-tab-btn active" data-tech-tab="languages">Languages</button>
+                <button class="tech-tab-btn" data-tech-tab="frameworks">Frameworks</button>
+                <button class="tech-tab-btn" data-tech-tab="cloud">Cloud & DevOps</button>
+                <button class="tech-tab-btn" data-tech-tab="database">Databases</button>
+            </div>
+            
+            <!-- Tech Stack Content -->
+            <div class="tech-content-wrapper">
+                <!-- Languages Tab -->
+                <div class="tech-content active" id="languages">
+                    <div class="tech-grid">
+                        <div class="tech-item" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/python.svg' %}" alt="Python">
+                            </div>
+                            <h4>Python</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 95%;"></div>
+                            </div>
+                            <p>Data Science, AI/ML, Web Development</p>
+                        </div>
+                        <div class="tech-item" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/java.svg' %}" alt="Java">
+                            </div>
+                            <h4>Java</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 90%;"></div>
+                            </div>
+                            <p>Enterprise Applications, Microservices</p>
+                        </div>
+                        <div class="tech-item" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/javascript.svg' %}" alt="JavaScript">
+                            </div>
+                            <h4>JavaScript</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 92%;"></div>
+                            </div>
+                            <p>Frontend, Backend, Full-stack Development</p>
+                        </div>
+                        <div class="tech-item" data-aos="zoom-in" data-aos-delay="400">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/typescript.svg' %}" alt="TypeScript">
+                            </div>
+                            <h4>TypeScript</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 88%;"></div>
+                            </div>
+                            <p>Enterprise Frontend, Type-safe Applications</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Frameworks Tab -->
+                <div class="tech-content" id="frameworks">
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/django.svg' %}" alt="Django">
+                            </div>
+                            <h4>Django</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 94%;"></div>
+                            </div>
+                            <p>Rapid Development, Content Management</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/spring.svg' %}" alt="Spring">
+                            </div>
+                            <h4>Spring</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 91%;"></div>
+                            </div>
+                            <p>Enterprise Solutions, Microservices</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/react.svg' %}" alt="React">
+                            </div>
+                            <h4>React</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 93%;"></div>
+                            </div>
+                            <p>Interactive UIs, Single Page Applications</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/angular.svg' %}" alt="Angular">
+                            </div>
+                            <h4>Angular</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 87%;"></div>
+                            </div>
+                            <p>Enterprise Web Apps, PWAs</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cloud & DevOps Tab -->
+                <div class="tech-content" id="cloud">
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/aws.svg' %}" alt="AWS">
+                            </div>
+                            <h4>AWS</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 90%;"></div>
+                            </div>
+                            <p>Cloud Infrastructure, Serverless</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/docker.svg' %}" alt="Docker">
+                            </div>
+                            <h4>Docker</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 92%;"></div>
+                            </div>
+                            <p>Containerization, Deployment</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/kubernetes.svg' %}" alt="Kubernetes">
+                            </div>
+                            <h4>Kubernetes</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 85%;"></div>
+                            </div>
+                            <p>Container Orchestration, Scaling</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/github.svg' %}" alt="GitHub">
+                            </div>
+                            <h4>GitHub</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 96%;"></div>
+                            </div>
+                            <p>Version Control, CI/CD</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Databases Tab -->
+                <div class="tech-content" id="database">
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/postgresql.svg' %}" alt="PostgreSQL">
+                            </div>
+                            <h4>PostgreSQL</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 93%;"></div>
+                            </div>
+                            <p>Relational Database, Enterprise Solutions</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/mongodb.svg' %}" alt="MongoDB">
+                            </div>
+                            <h4>MongoDB</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 89%;"></div>
+                            </div>
+                            <p>NoSQL, Document Database</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/redis.svg' %}" alt="Redis">
+                            </div>
+                            <h4>Redis</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 87%;"></div>
+                            </div>
+                            <p>In-memory Database, Caching</p>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <img src="{% static 'images/tech/elasticsearch.svg' %}" alt="Elasticsearch">
+                            </div>
+                            <h4>Elasticsearch</h4>
+                            <div class="tech-progress">
+                                <div class="tech-progress-bar" style="width: 84%;"></div>
+                            </div>
+                            <p>Search Engine, Analytics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add JavaScript for Tech Tabs -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tech-tab-btn');
+        const tabContents = document.querySelectorAll('.tech-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = button.getAttribute('data-tech-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    });
+</script>
+
+<!-- Services Section -->
+<section class="services-section py-5">
+    <div class="services-bg-pattern"></div>
+    <div class="container position-relative">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-primary-soft mb-3">What We Do</div>
+            <h2 class="section-title">Transforming Ideas Into <span class="text-gradient">Solutions</span></h2>
+            <p class="section-subtitle">Comprehensive services to power your digital transformation</p>
+        </div>
+        
+        <div class="home-services-grid" data-aos="fade-up">
+            <!-- Service 1 -->
+            <div class="home-service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="home-service-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="home-service-content">
+                    <h3>Custom Software</h3>
+                    <p>Tailored solutions designed specifically for your unique business requirements and challenges.</p>
+                    <ul class="home-service-features">
+                        <li><i class="fas fa-check-circle"></i> Enterprise applications</li>
+                        <li><i class="fas fa-check-circle"></i> Web & mobile solutions</li>
+                    </ul>
+                    <a href="{% url 'core:services' %}#custom-software" class="btn btn-primary btn-sm mt-3">Learn More</a>
+                </div>
+                <div class="service-hover-overlay">
+                    <div class="overlay-content">
+                        <p>Discover how our custom software can transform your business operations and drive growth.</p>
+                        <a href="{% url 'core:services' %}#custom-software" class="btn btn-light btn-sm">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="home-service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="home-service-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="home-service-content">
+                    <h3>AI/ML Solutions</h3>
+                    <p>Harness the power of artificial intelligence to gain insights and automate complex processes.</p>
+                    <ul class="home-service-features">
+                        <li><i class="fas fa-check-circle"></i> Predictive analytics</li>
+                        <li><i class="fas fa-check-circle"></i> Generative AI applications</li>
+                    </ul>
+                    <a href="{% url 'core:services' %}#ai-ml" class="btn btn-primary btn-sm mt-3">Learn More</a>
+                </div>
+                <div class="service-hover-overlay">
+                    <div class="overlay-content">
+                        <p>Leverage cutting-edge AI technologies to make data-driven decisions and stay ahead of competition.</p>
+                        <a href="{% url 'core:services' %}#ai-ml" class="btn btn-light btn-sm">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="home-service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="home-service-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="home-service-content">
+                    <h3>Full-stack Development</h3>
+                    <p>End-to-end development services covering both frontend and backend technologies.</p>
+                    <ul class="home-service-features">
+                        <li><i class="fas fa-check-circle"></i> Modern frontend frameworks</li>
+                        <li><i class="fas fa-check-circle"></i> Robust backend systems</li>
+                    </ul>
+                    <a href="{% url 'core:services' %}#fullstack" class="btn btn-primary btn-sm mt-3">Learn More</a>
+                </div>
+                <div class="service-hover-overlay">
+                    <div class="overlay-content">
+                        <p>Create seamless digital experiences with our comprehensive full-stack development expertise.</p>
+                        <a href="{% url 'core:services' %}#fullstack" class="btn btn-light btn-sm">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="home-service-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="home-service-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="home-service-content">
+                    <h3>Technology Consultancy</h3>
+                    <p>Strategic guidance on technology selection, architecture design, and implementation.</p>
+                    <ul class="home-service-features">
+                        <li><i class="fas fa-check-circle"></i> Digital transformation</li>
+                        <li><i class="fas fa-check-circle"></i> Security assessments</li>
+                    </ul>
+                    <a href="{% url 'core:services' %}#consultancy" class="btn btn-primary btn-sm mt-3">Learn More</a>
+                </div>
+                <div class="service-hover-overlay">
+                    <div class="overlay-content">
+                        <p>Navigate complex technology landscapes with expert advice to maximize your ROI.</p>
+                        <a href="{% url 'core:services' %}#consultancy" class="btn btn-light btn-sm">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'core:services' %}" class="btn btn-outline-primary btn-lg">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section Preview -->
+<section class="team-section py-6">
+    <div class="team-bg-pattern"></div>
+    <div class="container position-relative">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="badge bg-primary-soft mb-3">Our Experts</div>
+            <h2 class="section-title">Meet The <span class="text-gradient">Talented Team</span></h2>
+            <p class="section-subtitle">Passionate professionals driving innovation and excellence</p>
+        </div>
+        
+        <div class="team-filter-buttons mb-4" data-aos="fade-up">
+            <button class="team-filter-btn active" data-filter="all">All</button>
+            <button class="team-filter-btn" data-filter="development">Development</button>
+            <button class="team-filter-btn" data-filter="design">Design</button>
+            <button class="team-filter-btn" data-filter="management">Management</button>
+        </div>
+        
+        <div class="team-grid">
+            {% for member in team_members %}
+            <div class="team-member-card" data-category="{{ member.department|default:'development' }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'100' }}">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <img src="{{ member.photo.url }}" alt="{{ member.name }}">
+                            <div class="team-member-social">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                {% endif %}
+                                {% if member.github %}
+                                <a href="{{ member.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                                {% endif %}
+                                {% if member.twitter %}
+                                <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>{{ member.name }}</h3>
+                            <p class="team-member-position">{{ member.position }}</p>
+                            <div class="team-member-tags">
+                                {% for skill in member.skills.all|slice:":3" %}
+                                <span class="team-member-tag">{{ skill.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="team-member-actions">
+                                <button class="team-member-action-btn btn-flip" onclick="toggleFlip(this)">
+                                    <i class="fas fa-sync-alt"></i> Info
+                                </button>
+                                <a href="{% url 'core:team_member_detail' 1 %}" class="team-member-action-btn btn-profile">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>{{ member.name }}</h3>
+                        <p class="team-member-bio">{{ member.bio|truncatewords:30 }}</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">{{ member.experience }}</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">{{ member.projects.count }}</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                        <button class="team-member-action-btn btn-flip mt-3" onclick="toggleFlip(this)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default Team Members if none in database -->
+            <div class="team-member-card" data-category="management" data-aos="fade-up" data-aos-delay="100">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <div class="team-member-placeholder">
+                                <span>A</span>
+                            </div>
+                            <div class="team-member-social">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>Ayush Sen</h3>
+                            <p class="team-member-position">Founder & Developer</p>
+                            <div class="team-member-tags">
+                                <span class="team-member-tag">Python</span>
+                                <span class="team-member-tag">AI/ML</span>
+                                <span class="team-member-tag">Architecture</span>
+                            </div>
+                            <div class="team-member-actions">
+                                <button class="team-member-action-btn btn-flip" onclick="toggleFlip(this)">
+                                    <i class="fas fa-sync-alt"></i> Info
+                                </button>
+                                <a href="{% url 'core:team_member_detail' 1 %}" class="team-member-action-btn btn-profile">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>Ayush Sen</h3>
+                        <p class="team-member-bio">Experienced developer with expertise in building scalable applications and leading technical teams.</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">8</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">3</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                        <button class="team-member-action-btn btn-flip mt-3" onclick="toggleFlip(this)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-member-card" data-category="development" data-aos="fade-up" data-aos-delay="200">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <div class="team-member-placeholder">
+                                <span>A</span>
+                            </div>
+                            <div class="team-member-social">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>Ashutosh</h3>
+                            <p class="team-member-position">Senior Developer</p>
+                            <div class="team-member-tags">
+                                <span class="team-member-tag">React</span>
+                                <span class="team-member-tag">Node.js</span>
+                                <span class="team-member-tag">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>Ashutosh</h3>
+                        <p class="team-member-bio">Full-stack developer specializing in modern JavaScript frameworks and cloud infrastructure.</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">6</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">18</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                        <button class="team-member-action-btn btn-flip mt-3" onclick="toggleFlip(this)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-member-card" data-category="design" data-aos="fade-up" data-aos-delay="300">
+                <div class="team-member-card-inner">
+                    <div class="team-member-front">
+                        <div class="team-member-image">
+                            <div class="team-member-placeholder">
+                                <span>R</span>
+                            </div>
+                            <div class="team-member-social">
+                                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-member-info">
+                            <h3>Rahul</h3>
+                            <p class="team-member-position">UI/UX Designer</p>
+                            <div class="team-member-tags">
+                                <span class="team-member-tag">UI/UX</span>
+                                <span class="team-member-tag">Figma</span>
+                                <span class="team-member-tag">Frontend</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-back">
+                        <h3>Rahul</h3>
+                        <p class="team-member-bio">Creative designer with a passion for creating intuitive, user-centered digital experiences.</p>
+                        <div class="team-member-stats">
+                            <div class="team-stat">
+                                <span class="stat-value">5</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="team-stat">
+                                <span class="stat-value">15</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                        <button class="team-member-action-btn btn-flip mt-3" onclick="toggleFlip(this)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="team-stats-container" data-aos="fade-up">
+            <div class="team-stat-item">
+                <div class="team-stat-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="team-stat-value" data-count="50000">50,000+</div>
+                <div class="team-stat-label">Lines of Code</div>
+            </div>
+            <div class="team-stat-item">
+                <div class="team-stat-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="team-stat-value" data-count="100">100+</div>
+                <div class="team-stat-label">Projects Completed</div>
+            </div>
+            <div class="team-stat-item">
+                <div class="team-stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="team-stat-value" data-count="50">50+</div>
+                <div class="team-stat-label">Happy Clients</div>
+            </div>
+            <div class="team-stat-item">
+                <div class="team-stat-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="team-stat-value" data-count="15">15+</div>
+                <div class="team-stat-label">Awards Won</div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'core:team' %}" class="btn btn-outline-primary btn-lg">Meet Our Full Team</a>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section JavaScript -->
+<script>
+    function toggleFlip(button) {
+        // Find the closest team-member-card parent
+        const card = button.closest('.team-member-card');
+        
+        // Toggle the flipped class
+        card.classList.toggle('flipped');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Team filtering functionality
+        const filterButtons = document.querySelectorAll('.team-filter-btn');
+        const teamCards = document.querySelectorAll('.team-member-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get filter value
+                const filterValue = button.getAttribute('data-filter');
+                
+                // Filter team members
+                teamCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <p class="section-subtitle">Success stories from our valued clients</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for testimonial in testimonials %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <div class="testimonial-card" data-aos="fade-up">
+                                    <div class="rating mb-3">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= testimonial.rating %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <p class="testimonial-text mb-4">"{{ testimonial.comment }}"</p>
+                                    <div class="client-info d-flex align-items-center">
+                                        {% if testimonial.photo %}
+                                            <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}" class="client-img me-3">
+                                        {% else %}
+                                            <div class="client-img-placeholder me-3">{{ testimonial.name|first }}</div>
+                                        {% endif %}
+                                        <div>
+                                            <h5 class="client-name mb-0">{{ testimonial.name }}</h5>
+                                            <p class="client-position mb-0">{{ testimonial.position }}{% if testimonial.company %}, {{ testimonial.company }}{% endif %}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <!-- Default Testimonial if none in database -->
+                            <div class="carousel-item active">
+                                <div class="testimonial-card" data-aos="fade-up">
+                                    <div class="rating mb-3">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <p class="testimonial-text mb-4">"Aaradhyadhrma delivered exceptional software solutions that transformed our business operations. Their expertise in AI/ML technologies helped us gain valuable insights from our data, leading to better decision-making and increased efficiency."</p>
+                                    <div class="client-info d-flex align-items-center">
+                                        <div class="client-img-placeholder me-3">S</div>
+                                        <div>
+                                            <h5 class="client-name mb-0">Sanjay Mehta</h5>
+                                            <p class="client-position mb-0">CTO, TechInnovate Solutions</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'core:testimonials' %}" class="btn btn-outline-primary">View All Testimonials</a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center" data-aos="zoom-in">
+        <h2 class="mb-4">Ready to Transform Your Ideas into Reality?</h2>
+        <p class="lead mb-4">Let's collaborate to build innovative solutions for your business needs.</p>
+        <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Contact Us Today</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Typing effect for the hero section
+    document.addEventListener('DOMContentLoaded', function() {
+        const words = [
+            "innovative software solutions",
+            "powerful AI/ML applications",
+            "scalable web platforms",
+            "custom enterprise software",
+            "digital transformation tools"
+        ];
+        
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            const typingElement = document.getElementById('typingText');
+            
+            if (isDeleting) {
+                // Deleting text
+                typingElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                // Typing text
+                typingElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            // When word is complete
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                typingSpeed = 1500; // Pause at end of word
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typingSpeed = 500; // Pause before starting new word
+            }
+            
+            setTimeout(typeEffect, typingSpeed);
+        }
+        
+        // Start the typing effect
+        typeEffect();
+    });
+</script>
+{% endblock %}

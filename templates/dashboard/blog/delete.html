@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Delete Blog Post{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-body text-center p-5">
+        <div class="mb-4">
+            <i class="fas fa-exclamation-triangle text-warning fa-4x"></i>
+        </div>
+        <h2 class="mb-4">Confirm Deletion</h2>
+        <p class="mb-4">Are you sure you want to delete the blog post "<strong>{{ post.title }}</strong>"?</p>
+        <p class="text-danger mb-4">This action cannot be undone.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'dashboard:blog_edit' post.id %}" class="btn btn-outline-secondary me-2">
+                    <i class="fas fa-arrow-left"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete Post
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

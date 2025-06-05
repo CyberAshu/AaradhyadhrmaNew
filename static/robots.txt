@@ -1,0 +1,10 @@
+# robots.txt for Aaradhyadhrma Website
+User-agent: *
+Allow: /
+
+# Disallow admin and accounts pages
+Disallow: /admin/
+Disallow: /accounts/
+
+# Sitemap location
+Sitemap: https://www.aaradhyadhrma.com/sitemap.xml

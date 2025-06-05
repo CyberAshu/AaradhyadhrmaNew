@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <style>
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .floating-astronaut {
+      animation: float 6s ease-in-out infinite;
+    }
+    .planet {
+      animation: spin 60s linear infinite;
+    }
+  </style>
+  
+  <!-- Background stars -->
+  <rect width="800" height="600" fill="#f8f9fc" />
+  
+  <g class="stars">
+    <!-- Small stars scattered around -->
+    <circle cx="100" cy="80" r="2" fill="#6e8fff" />
+    <circle cx="200" cy="150" r="1.5" fill="#6e8fff" />
+    <circle cx="300" cy="50" r="2" fill="#6e8fff" />
+    <circle cx="400" cy="100" r="1" fill="#6e8fff" />
+    <circle cx="500" cy="200" r="2" fill="#6e8fff" />
+    <circle cx="600" cy="120" r="1.5" fill="#6e8fff" />
+    <circle cx="700" cy="180" r="1" fill="#6e8fff" />
+    <circle cx="150" cy="250" r="2" fill="#6e8fff" />
+    <circle cx="250" cy="300" r="1" fill="#6e8fff" />
+    <circle cx="350" cy="220" r="1.5" fill="#6e8fff" />
+    <circle cx="450" cy="280" r="2" fill="#6e8fff" />
+    <circle cx="550" cy="320" r="1" fill="#6e8fff" />
+    <circle cx="650" cy="260" r="1.5" fill="#6e8fff" />
+    <circle cx="120" cy="380" r="1" fill="#6e8fff" />
+    <circle cx="220" cy="420" r="2" fill="#6e8fff" />
+    <circle cx="320" cy="360" r="1.5" fill="#6e8fff" />
+    <circle cx="420" cy="440" r="1" fill="#6e8fff" />
+    <circle cx="520" cy="400" r="2" fill="#6e8fff" />
+    <circle cx="620" cy="460" r="1.5" fill="#6e8fff" />
+    <circle cx="180" cy="520" r="1" fill="#6e8fff" />
+    <circle cx="280" cy="480" r="2" fill="#6e8fff" />
+    <circle cx="380" cy="540" r="1.5" fill="#6e8fff" />
+    <circle cx="480" cy="500" r="1" fill="#6e8fff" />
+    <circle cx="580" cy="560" r="2" fill="#6e8fff" />
+    <circle cx="680" cy="520" r="1.5" fill="#6e8fff" />
+  </g>
+  
+  <!-- Planet -->
+  <g class="planet" transform="translate(550, 450)">
+    <circle cx="0" cy="0" r="60" fill="#25e0a0" />
+    <ellipse cx="-20" cy="-15" rx="20" ry="10" fill="#1ac085" transform="rotate(30)" />
+    <ellipse cx="15" cy="20" rx="25" ry="12" fill="#1ac085" transform="rotate(15)" />
+  </g>
+  
+  <!-- Floating astronaut with 404 sign -->
+  <g class="floating-astronaut" transform="translate(300, 300)">
+    <!-- Astronaut body -->
+    <ellipse cx="0" cy="0" rx="50" ry="60" fill="#ffffff" stroke="#6e8fff" stroke-width="3" />
+    
+    <!-- Helmet visor -->
+    <ellipse cx="0" cy="-15" rx="35" ry="30" fill="#6e8fff" opacity="0.3" />
+    
+    <!-- 404 Sign -->
+    <rect x="-80" y="-80" width="160" height="70" rx="10" fill="#ffffff" stroke="#6e8fff" stroke-width="3" />
+    <text x="0" y="-30" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#6e8fff" text-anchor="middle">404</text>
+    
+    <!-- Arms -->
+    <path d="M-45,0 Q-70,40 -90,30" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" />
+    <path d="M45,0 Q70,40 90,30" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" />
+    
+    <!-- Legs -->
+    <path d="M-20,55 Q-30,90 -40,110" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+    <path d="M20,55 Q30,90 40,110" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+  </g>
+  
+  <!-- Satellite floating -->
+  <g transform="translate(150, 150)">
+    <rect x="-25" y="-10" width="50" height="20" fill="#adb5bd" rx="2" />
+    <rect x="-35" y="-5" width="10" height="10" fill="#6e8fff" />
+    <rect x="25" y="-5" width="10" height="10" fill="#6e8fff" />
+    <rect x="-10" y="-30" width="20" height="20" fill="#adb5bd" />
+    <rect x="-5" y="-40" width="10" height="10" fill="#6e8fff" />
+  </g>
+</svg>

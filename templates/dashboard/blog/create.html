@@ -1,0 +1,157 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Create New Blog Post{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'dashboard:blog_list' %}" class="btn btn-outline-primary">
+    <i class="fas fa-arrow-left"></i> Back to Posts
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .ql-editor {
+        min-height: 250px;
+    }
+    
+    .required::after {
+        content: "*";
+        color: red;
+        margin-left: 4px;
+    }
+    
+    .preview-image {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 5px;
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="title" class="form-label required">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                    <div class="form-text">Enter a descriptive title for your blog post.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="slug" class="form-label required">Slug</label>
+                    <input type="text" class="form-control" id="slug" name="slug" required>
+                    <div class="form-text">URL-friendly version of the title. Use lowercase letters, numbers, and hyphens only.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="excerpt" class="form-label">Excerpt</label>
+                    <textarea class="form-control" id="excerpt" name="excerpt" rows="3"></textarea>
+                    <div class="form-text">A short summary of the blog post (optional).</div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="status" class="form-label required">Status</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="category" class="form-label required">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="tags" class="form-label">Tags</label>
+                    <select class="form-select" id="tags" name="tags" multiple>
+                        {% for tag in tags %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-text">Hold Ctrl (or Cmd) to select multiple tags.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="featured_image" class="form-label">Featured Image</label>
+                    <input type="file" class="form-control" id="featured_image" name="featured_image" accept="image/*">
+                    <div class="form-text">Recommended size: 1200 x 630 pixels.</div>
+                    <img id="image_preview" class="preview-image mt-2" src="#" alt="Preview">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label for="content" class="form-label required">Content</label>
+            <input type="hidden" id="content-input" name="content">
+            <div id="content-editor" class="quill-editor" data-input="content-input"></div>
+            <div class="form-text">The main content of your blog post.</div>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-secondary" id="cancel-btn">Cancel</button>
+            <div>
+                <button type="submit" class="btn btn-primary" name="status" value="published">Publish</button>
+                <button type="submit" class="btn btn-outline-primary" name="status" value="draft">Save as Draft</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-generate slug from title
+    document.getElementById('title').addEventListener('keyup', function() {
+        const title = this.value;
+        const slug = title.toLowerCase()
+            .replace(/[^\w\s-]/g, '')  // Remove special chars except space and hyphen
+            .replace(/\s+/g, '-')      // Replace spaces with hyphens
+            .replace(/-+/g, '-');      // Replace multiple hyphens with single hyphen
+        
+        document.getElementById('slug').value = slug;
+    });
+    
+    // Image preview
+    document.getElementById('featured_image').addEventListener('change', function() {
+        const file = this.files[0];
+        const preview = document.getElementById('image_preview');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+    
+    // Add cancel button functionality
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        window.location.href = '{% url "dashboard:blog_list" %}';
+    });
+    
+    // Initialize Select2 for better tag selection if available
+    if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+        $('#tags').select2({
+            placeholder: 'Select tags',
+            width: '100%'
+        });
+    }
+</script>
+{% endblock %}

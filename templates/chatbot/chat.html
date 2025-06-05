@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Aaradhya AI Assistant - Aaradhyadhrma{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="chatbot-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="section-title text-center">
+                    <h2 class="gradient-text">Aaradhya AI Assistant</h2>
+                    <p>Ask me anything about our services, technologies, or how we can help with your project.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-header-title">
+                            <img src="{% static 'images/logo.svg' %}" alt="Aaradhyadhrma Logo" class="chat-logo">
+                            <div>
+                                <h3>Aaradhya AI Assistant</h3>
+                                <span class="status-indicator">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-content">
+                                <p>Hello! I'm Aaradhya, your AI assistant. How can I help you today?</p>
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <form id="chat-form">
+                            <div class="input-group">
+                                <input type="text" id="user-input" class="form-control" placeholder="Type your message here..." autocomplete="off">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/chatbot.js' %}"></script>
+{% endblock %}

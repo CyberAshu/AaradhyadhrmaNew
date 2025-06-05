@@ -1,0 +1,150 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Edit Team Member: {{ team_member.name }}{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'dashboard:team_list' %}" class="btn btn-outline-primary">
+    <i class="fas fa-arrow-left"></i> Back to Team Members
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .required::after {
+        content: "*";
+        color: red;
+        margin-left: 4px;
+    }
+    
+    .preview-image {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="form-card">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label required">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ team_member.name }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="position" class="form-label required">Position</label>
+                            <input type="text" class="form-control" id="position" name="position" value="{{ team_member.position }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="avatar" class="form-label">Profile Picture</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
+                            <div class="form-text">Recommended: Square image, at least 300x300 pixels.</div>
+                            {% if team_member.avatar %}
+                            <div class="mt-2">
+                                <p class="mb-2">Current image:</p>
+                                <img src="{{ team_member.avatar.url }}" alt="{{ team_member.name }}" class="preview-image">
+                            </div>
+                            {% endif %}
+                            <img id="avatar_preview" class="preview-image mt-2" src="#" alt="Preview" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="linkedin" class="form-label">LinkedIn URL</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-linkedin"></i></span>
+                                <input type="url" class="form-control" id="linkedin" name="linkedin" value="{{ team_member.linkedin }}" placeholder="https://linkedin.com/in/username">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="github" class="form-label">GitHub URL</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-github"></i></span>
+                                <input type="url" class="form-control" id="github" name="github" value="{{ team_member.github }}" placeholder="https://github.com/username">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="twitter" class="form-label">Twitter URL</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-twitter"></i></span>
+                                <input type="url" class="form-control" id="twitter" name="twitter" value="{{ team_member.twitter }}" placeholder="https://twitter.com/username">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Bio</label>
+                    <textarea class="form-control" id="bio" name="bio" rows="4">{{ team_member.bio }}</textarea>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="order" class="form-label">Display Order</label>
+                            <input type="number" class="form-control" id="order" name="order" value="{{ team_member.order }}" min="0">
+                            <div class="form-text">Lower numbers appear first.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check mt-4">
+                            <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {% if team_member.is_active %}checked{% endif %}>
+                            <label class="form-check-label" for="is_active">Active</label>
+                            <div class="form-text">Inactive team members will not be displayed on the website.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a href="{% url 'dashboard:team_delete' team_member.id %}" class="btn btn-outline-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-secondary me-2" id="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add cancel button functionality
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        window.location.href = '{% url "dashboard:team_list" %}';
+    });
+    // Image preview
+    document.getElementById('avatar').addEventListener('change', function() {
+        const file = this.files[0];
+        const preview = document.getElementById('avatar_preview');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

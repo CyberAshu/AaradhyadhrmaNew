@@ -1,0 +1,66 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block account_title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block account_content %}
+<div class="login-signup-section">
+  <div class="text-center mb-4">
+    <img src="{% static 'images/signup-illustration.svg' %}" alt="Sign Up" class="img-fluid mb-4" style="max-height: 150px;">
+    <h2>{% trans "Create Your Account" %}</h2>
+  </div>
+
+  <p class="text-center mb-4">{% trans "Already have an account?" %} <a href="{{ login_url }}" class="text-primary">{% trans "Sign In" %}</a></p>
+
+  <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+    
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="mb-3">
+      <label for="id_username" class="form-label">{% trans "Username" %}</label>
+      <input type="text" name="username" placeholder="{% trans 'Username' %}" class="form-control" id="id_username" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="id_email" class="form-label">{% trans "Email" %}</label>
+      <input type="email" name="email" placeholder="{% trans 'E-mail address' %}" class="form-control" id="id_email" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="id_password1" class="form-label">{% trans "Password" %}</label>
+      <input type="password" name="password1" placeholder="{% trans 'Password' %}" class="form-control" id="id_password1" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="id_password2" class="form-label">{% trans "Confirm Password" %}</label>
+      <input type="password" name="password2" placeholder="{% trans 'Password (again)' %}" class="form-control" id="id_password2" required>
+    </div>
+    
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="terms_check" required>
+      <label class="form-check-label" for="terms_check">
+        {% blocktrans %}I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>{% endblocktrans %}
+      </label>
+    </div>
+    
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    
+    <div class="d-grid gap-2 mt-4">
+      <button class="btn btn-primary" type="submit">{% trans "Sign Up" %}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

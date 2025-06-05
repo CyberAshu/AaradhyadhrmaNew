@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="error-404-section py-5">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="error-img mb-5">
+                    <img src="{% static 'images/404.svg' %}" alt="404 Not Found" class="img-fluid" style="max-height: 300px;">
+                </div>
+                <h1 class="display-1 fw-bold mb-3">404</h1>
+                <h2 class="mb-4">Oops! Page Not Found</h2>
+                <p class="lead mb-5">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'core:home' %}" class="btn btn-primary btn-lg">Go to Homepage</a>
+                    <a href="javascript:history.back()" class="btn btn-outline-primary btn-lg">Go Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Add simple animation for the 404 page
+    document.addEventListener('DOMContentLoaded', function() {
+        const errorImg = document.querySelector('.error-img img');
+        
+        if (errorImg) {
+            // Simple float animation
+            let floating = false;
+            const floatAnimation = () => {
+                if (floating) {
+                    errorImg.style.transform = 'translateY(0)';
+                } else {
+                    errorImg.style.transform = 'translateY(-15px)';
+                }
+                floating = !floating;
+                setTimeout(floatAnimation, 1500);
+            };
+            
+            errorImg.style.transition = 'transform 1.5s ease-in-out';
+            floatAnimation();
+        }
+    });
+</script>
+{% endblock %}

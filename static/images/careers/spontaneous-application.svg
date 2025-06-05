@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="300" viewBox="0 0 500 300">
+  <rect width="500" height="300" fill="#f8f9fa"/>
+  <text x="250" y="150" font-family="Arial" font-size="20" text-anchor="middle" fill="#6e8fff">Spontaneous Application</text>
+  <rect x="150" y="100" width="200" height="30" stroke="#6e8fff" stroke-width="2" fill="none"/>
+  <rect x="150" y="140" width="200" height="30" stroke="#6e8fff" stroke-width="2" fill="none"/>
+  <rect x="150" y="180" width="200" height="30" stroke="#6e8fff" stroke-width="2" fill="none"/>
+  <path d="M370,180 L350,190 L370,200" stroke="#6e8fff" stroke-width="2" fill="none"/>
+</svg>

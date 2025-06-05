@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Job Detail Hero Section -->
+<section class="job-detail-hero-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto" data-aos="fade-up">
+                <div class="mb-4">
+                    <a href="{% url 'careers:careers_list' %}" class="btn btn-outline-secondary btn-sm mb-3">
+                        <i class="fas fa-arrow-left me-1"></i> Back to All Jobs
+                    </a>
+                    <h1 class="display-5 fw-bold mb-3">{{ job.title }}</h1>
+                    <div class="job-meta">
+                        <span class="job-location me-3"><i class="fas fa-map-marker-alt me-1"></i>{{ job.location }}</span>
+                        <span class="job-type me-3"><i class="fas fa-briefcase me-1"></i>{{ job.get_employment_type_display }}</span>
+                        <span class="job-date"><i class="far fa-calendar-alt me-1"></i>Posted on {{ job.posted_date|date:"M d, Y" }}</span>
+                        {% if job.closing_date %}
+                        <span class="job-closing-date ms-3"><i class="fas fa-hourglass-end me-1"></i>Closing on {{ job.closing_date|date:"M d, Y" }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Job Detail Content Section -->
+<section class="job-detail-content-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="job-content p-4 rounded shadow-sm mb-4">
+                    <div class="mb-5">
+                        <h3 class="mb-3">About the Position</h3>
+                        <div class="mb-4">
+                            {{ job.description|safe }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">Key Responsibilities</h3>
+                        <div class="mb-4">
+                            {{ job.responsibilities|safe }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">Requirements</h3>
+                        <div class="mb-4">
+                            {{ job.requirements|safe }}
+                        </div>
+                    </div>
+                    
+                    {% if job.salary_range %}
+                    <div class="mb-5">
+                        <h3 class="mb-3">Compensation</h3>
+                        <p>{{ job.salary_range }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="text-center mt-5">
+                        {% if is_closed %}
+                        <div class="alert alert-warning mb-4">
+                            <p class="mb-0">This position is no longer accepting applications.</p>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'careers:job_apply' job_id=job.id %}" class="btn btn-primary btn-lg">Apply for this Position</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="job-sidebar">
+                    <!-- Company Overview -->
+                    <div class="sidebar-widget company-widget p-4 rounded shadow-sm mb-4">
+                        <h4 class="widget-title mb-3">About Aaradhyadhrma</h4>
+                        <div class="company-logo mb-3">
+                            <img src="{% static 'images/logo.png' %}" alt="Aaradhyadhrma Logo" height="60">
+                        </div>
+                        <p>Aaradhyadhrma is a technology company that combines ancient wisdom with modern solutions to create innovative software products and services.</p>
+                        <a href="{% url 'core:about' %}" class="btn-link">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                    
+                    <!-- Job Summary -->
+                    <div class="sidebar-widget job-summary-widget p-4 rounded shadow-sm mb-4">
+                        <h4 class="widget-title mb-3">Job Summary</h4>
+                        <ul class="list-unstyled">
+                            <li class="d-flex mb-3">
+                                <div class="icon-box me-3">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Location</h6>
+                                    <p class="mb-0">{{ job.location }}</p>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-3">
+                                <div class="icon-box me-3">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Employment Type</h6>
+                                    <p class="mb-0">{{ job.get_employment_type_display }}</p>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-3">
+                                <div class="icon-box me-3">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Posted Date</h6>
+                                    <p class="mb-0">{{ job.posted_date|date:"F d, Y" }}</p>
+                                </div>
+                            </li>
+                            {% if job.closing_date %}
+                            <li class="d-flex mb-3">
+                                <div class="icon-box me-3">
+                                    <i class="fas fa-hourglass-end"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Closing Date</h6>
+                                    <p class="mb-0">{{ job.closing_date|date:"F d, Y" }}</p>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% if job.salary_range %}
+                            <li class="d-flex">
+                                <div class="icon-box me-3">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Salary Range</h6>
+                                    <p class="mb-0">{{ job.salary_range }}</p>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Share Job -->
+                    <div class="sidebar-widget share-job-widget p-4 rounded shadow-sm mb-4">
+                        <h4 class="widget-title mb-3">Share This Job</h4>
+                        <div class="social-share-buttons">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-primary me-2 mb-2">
+                                <i class="fab fa-facebook-f me-1"></i> Facebook
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Job%20Opening:%20{{ job.title }}" target="_blank" class="btn btn-outline-info me-2 mb-2">
+                                <i class="fab fa-twitter me-1"></i> Twitter
+                            </a>
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title=Job%20Opening:%20{{ job.title }}" target="_blank" class="btn btn-outline-secondary mb-2">
+                                <i class="fab fa-linkedin-in me-1"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Similar Jobs Section -->
+<section class="similar-jobs-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12" data-aos="fade-up">
+                <h2 class="section-title mb-4">Similar Positions</h2>
+                <div class="row g-4">
+                    {% for similar_job in similar_jobs|default:'' %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="job-card h-100 p-4 rounded shadow-sm">
+                            <h3 class="job-title mb-2">{{ similar_job.title }}</h3>
+                            <div class="job-meta mb-3">
+                                <span class="job-location me-3"><i class="fas fa-map-marker-alt me-1"></i>{{ similar_job.location }}</span>
+                                <span class="job-type"><i class="fas fa-briefcase me-1"></i>{{ similar_job.get_employment_type_display }}</span>
+                            </div>
+                            <p class="job-excerpt mb-3">{{ similar_job.description|truncatewords:20 }}</p>
+                            <a href="{{ similar_job.get_absolute_url }}" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Default Similar Jobs if none available -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="job-card h-100 p-4 rounded shadow-sm">
+                            <h3 class="job-title mb-2">Frontend Developer</h3>
+                            <div class="job-meta mb-3">
+                                <span class="job-location me-3"><i class="fas fa-map-marker-alt me-1"></i>Indore</span>
+                                <span class="job-type"><i class="fas fa-briefcase me-1"></i>Full Time</span>
+                            </div>
+                            <p class="job-excerpt mb-3">We're looking for a talented Frontend Developer with experience in React.js to join our growing team.</p>
+                            <a href="{% url 'careers:careers_list' %}" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="job-card h-100 p-4 rounded shadow-sm">
+                            <h3 class="job-title mb-2">DevOps Engineer</h3>
+                            <div class="job-meta mb-3">
+                                <span class="job-location me-3"><i class="fas fa-map-marker-alt me-1"></i>Indore</span>
+                                <span class="job-type"><i class="fas fa-briefcase me-1"></i>Full Time</span>
+                            </div>
+                            <p class="job-excerpt mb-3">Join our DevOps team to help build and maintain our cloud infrastructure and CI/CD pipelines.</p>
+                            <a href="{% url 'careers:careers_list' %}" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="job-card h-100 p-4 rounded shadow-sm">
+                            <h3 class="job-title mb-2">AI/ML Engineer</h3>
+                            <div class="job-meta mb-3">
+                                <span class="job-location me-3"><i class="fas fa-map-marker-alt me-1"></i>Indore</span>
+                                <span class="job-type"><i class="fas fa-briefcase me-1"></i>Full Time</span>
+                            </div>
+                            <p class="job-excerpt mb-3">We're seeking an AI/ML Engineer to help develop innovative solutions for our clients across various domains.</p>
+                            <a href="{% url 'careers:careers_list' %}" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center" data-aos="zoom-in">
+        <h2 class="mb-4">Ready to Apply?</h2>
+        <p class="lead mb-4">Take the first step towards joining our team.</p>
+        {% if is_closed %}
+        <a href="{% url 'careers:careers_list' %}" class="btn btn-light btn-lg">Explore Other Positions</a>
+        {% else %}
+        <a href="{% url 'careers:job_apply' job_id=job.id %}" class="btn btn-light btn-lg">Apply Now</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,201 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Job Listings{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'dashboard:careers_create' %}" class="btn btn-primary">
+    <i class="fas fa-plus"></i> New Job Listing
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Applications</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.id }}</td>
+                        <td><strong>{{ job.title }}</strong></td>
+                        <td>{{ job.location }}</td>
+                        <td>{{ job.get_employment_type_display }}</td>
+                        <td>
+                            {% if job.is_active %}
+                            <span class="badge bg-success">Active</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-primary">{{ job.applications.count }}</span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                {% if job.is_active %}
+                                <a href="{{ job.get_absolute_url }}" class="btn btn-sm btn-outline-primary" target="_blank" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'dashboard:careers_edit' job.id %}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'dashboard:careers_delete' job.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="fas fa-briefcase fa-3x mb-3"></i>
+                                <p>No job listings found</p>
+                                <a href="{% url 'dashboard:careers_create' %}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus"></i> Create your first job listing
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Job Applications Section -->
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Recent Job Applications</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                    <tr>
+                        <td>{{ application.id }}</td>
+                        <td>{{ application.name }}</td>
+                        <td>{{ application.email }}</td>
+                        <td>{{ application.job.title }}</td>
+                        <td>{{ application.applied_date|date:"M d, Y" }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-primary view-application" 
+                                        data-bs-toggle="modal" data-bs-target="#applicationModal"
+                                        data-id="{{ application.id }}"
+                                        data-name="{{ application.name }}"
+                                        data-email="{{ application.email }}"
+                                        data-phone="{{ application.phone }}"
+                                        data-job="{{ application.job.title }}"
+                                        data-date="{{ application.applied_date|date:'M d, Y' }}"
+                                        data-message="{{ application.cover_letter|escapejs }}"
+                                        data-resume="{% if application.resume %}{{ application.resume.url }}{% endif %}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4">
+                            <div class="text-muted">
+                                <p>No job applications received yet</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Application Modal -->
+<div class="modal fade" id="applicationModal" tabindex="-1" aria-labelledby="applicationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="applicationModalLabel">Job Application Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>Name:</strong> <span id="modal-name"></span></p>
+                        <p><strong>Email:</strong> <span id="modal-email"></span></p>
+                        <p><strong>Phone:</strong> <span id="modal-phone"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Position:</strong> <span id="modal-job"></span></p>
+                        <p><strong>Date Applied:</strong> <span id="modal-date"></span></p>
+                        <p><strong>Resume:</strong> <a id="modal-resume" href="#" target="_blank">View Resume</a></p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h6>Cover Letter / Message:</h6>
+                    <div class="p-3 bg-light rounded" id="modal-message"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Handle application modal
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewButtons = document.querySelectorAll('.view-application');
+        
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Populate modal with application data
+                document.getElementById('modal-name').textContent = this.getAttribute('data-name');
+                document.getElementById('modal-email').textContent = this.getAttribute('data-email');
+                document.getElementById('modal-phone').textContent = this.getAttribute('data-phone');
+                document.getElementById('modal-job').textContent = this.getAttribute('data-job');
+                document.getElementById('modal-date').textContent = this.getAttribute('data-date');
+                document.getElementById('modal-message').innerHTML = this.getAttribute('data-message');
+                
+                const resumeUrl = this.getAttribute('data-resume');
+                const resumeLink = document.getElementById('modal-resume');
+                
+                if (resumeUrl) {
+                    resumeLink.href = resumeUrl;
+                    resumeLink.style.display = 'inline';
+                } else {
+                    resumeLink.style.display = 'none';
+                    document.getElementById('modal-resume').parentElement.innerHTML = '<strong>Resume:</strong> Not provided';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

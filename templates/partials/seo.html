@@ -1,0 +1,61 @@
+{% load static %}
+
+{% comment %}
+  SEO Optimization Partial - Include this in the <head> section of base.html
+  This file contains meta tags and Open Graph tags for better SEO
+{% endcomment %}
+
+<!-- Basic SEO Meta Tags -->
+<meta name="description" content="{{ meta_description|default:'Aaradhyadhrma - Ancient Wisdom, Modern Solution. We specialize in custom software development, AI/ML solutions, full-stack development, and technology consultancy.' }}">
+<meta name="keywords" content="{{ meta_keywords|default:'software development, AI, ML, artificial intelligence, machine learning, full-stack development, web development, technology consultancy, Python, Java, JavaScript' }}">
+<meta name="author" content="Aaradhyadhrma">
+<meta name="robots" content="{{ meta_robots|default:'index, follow' }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<!-- Open Graph Meta Tags for social sharing -->
+{% with default_title="Aaradhyadhrma - Ancient Wisdom, Modern Solution" %}
+{% with default_desc="Aaradhyadhrma combines ancient wisdom with modern solutions to deliver innovative software, AI/ML, and technology consulting services." %}
+<meta property="og:title" content="{{ og_title|default:page_title|default:default_title }} | Aaradhyadhrma">
+<meta property="og:description" content="{{ og_description|default:meta_description|default:default_desc }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.svg' %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="{{ og_type|default:'website' }}">
+<meta property="og:site_name" content="Aaradhyadhrma">
+{% endwith %}
+{% endwith %}
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ twitter_title|default:og_title }}">
+<meta name="twitter:description" content="{{ twitter_description|default:og_description }}">
+<meta name="twitter:image" content="{{ twitter_image|default:og_image }}">
+
+<!-- Structured Data for Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Aaradhyadhrma",
+  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-1234567890",
+    "contactType": "customer service",
+    "email": "info@aaradhyadhrma.com"
+  },
+  "sameAs": [
+    "https://www.facebook.com/aaradhyadhrma",
+    "https://www.twitter.com/aaradhyadhrma",
+    "https://www.linkedin.com/company/aaradhyadhrma",
+    "https://www.github.com/aaradhyadhrma"
+  ]
+}
+</script>
+
+<!-- Additional structured data can be added here (like BreadcrumbList, etc.) -->
+{% if structured_data %}
+{{ structured_data|safe }}
+{% endif %}

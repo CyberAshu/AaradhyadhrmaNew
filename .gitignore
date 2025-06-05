@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+env.bak/
+venv.bak/
+
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+media/
+staticfiles/
+
+# Database
+*.sqlite3
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Node.js (if applicable)
+node_modules/
+npm-debug.*
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# Temporary files created by Django
+*.log
+*.pid
+
+# Static files collected by collectstatic
+static_root/
+
+# Ignore secret files and configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore build directories
+build/
+dist/
+
+# Ignore package-lock.json if using Yarn
+package-lock.json
+chatbot.log

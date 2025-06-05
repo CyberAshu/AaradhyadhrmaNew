@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- Job Application Hero Section -->
+<section class="job-application-hero-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto" data-aos="fade-up">
+                <div class="mb-4">
+                    <a href="{% url 'careers:job_detail' job_id=job.id %}" class="btn btn-outline-secondary btn-sm mb-3">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Job Details
+                    </a>
+                    <h1 class="display-5 fw-bold mb-3">Apply for {{ job.title }}</h1>
+                    <div class="job-meta">
+                        <span class="job-location me-3"><i class="fas fa-map-marker-alt me-1"></i>{{ job.location }}</span>
+                        <span class="job-type me-3"><i class="fas fa-briefcase me-1"></i>{{ job.get_employment_type_display }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Job Application Form Section -->
+<section class="job-application-form-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto" data-aos="fade-up">
+                <div class="application-form-container p-4 rounded shadow">
+                    <h2 class="mb-4">Application Form</h2>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                {{ form.name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.email|as_crispy_field }}
+                            </div>
+                            <div class="col-12">
+                                {{ form.phone|as_crispy_field }}
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="id_resume" class="form-label">Resume <span class="text-danger">*</span></label>
+                                    {{ form.resume }}
+                                    <div class="form-text">Upload your resume (PDF, DOC, or DOCX format, max 5MB)</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                {{ form.cover_letter|as_crispy_field }}
+                            </div>
+                            
+                            <div class="col-12">
+                                <h4 class="mt-3 mb-3">Online Profiles (Optional)</h4>
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.linkedin|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.github|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.portfolio|as_crispy_field }}
+                            </div>
+                            
+                            <div class="col-12 mt-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacyConsent" required>
+                                    <label class="form-check-label" for="privacyConsent">
+                                        I agree to the processing of my personal data according to the <a href="#">Privacy Policy</a>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Application Tips Section -->
+<section class="application-tips-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto" data-aos="fade-up">
+                <div class="tips-container p-4 rounded shadow">
+                    <h3 class="mb-4">Application Tips</h3>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="tip-item">
+                                <div class="icon-box mb-3">
+                                    <i class="fas fa-file-alt fa-2x text-primary"></i>
+                                </div>
+                                <h4>Resume</h4>
+                                <p>Keep your resume concise and relevant to the position. Highlight your achievements and skills that match the job requirements.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tip-item">
+                                <div class="icon-box mb-3">
+                                    <i class="fas fa-envelope-open-text fa-2x text-primary"></i>
+                                </div>
+                                <h4>Cover Letter</h4>
+                                <p>Explain why you're interested in this position and how your experience makes you a good fit for our company.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tip-item">
+                                <div class="icon-box mb-3">
+                                    <i class="fas fa-link fa-2x text-primary"></i>
+                                </div>
+                                <h4>Portfolio & Profiles</h4>
+                                <p>Include links to relevant work samples, GitHub repositories, or professional profiles that showcase your skills.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tip-item">
+                                <div class="icon-box mb-3">
+                                    <i class="fas fa-check-circle fa-2x text-primary"></i>
+                                </div>
+                                <h4>Double Check</h4>
+                                <p>Before submitting, review your application for any errors or missing information to make the best impression.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Application Process Section -->
+<section class="application-process-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Our Hiring Process</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle mx-auto" style="max-width: 700px;">
+                    What to expect after you submit your application
+                </p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up">
+                <div class="process-timeline">
+                    <div class="row g-0">
+                        <!-- Step 1 -->
+                        <div class="col-md-3">
+                            <div class="timeline-step">
+                                <div class="timeline-number">1</div>
+                                <div class="timeline-content">
+                                    <h4>Application Review</h4>
+                                    <p>We review your application to evaluate if your skills and experience match our requirements.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="col-md-3">
+                            <div class="timeline-step">
+                                <div class="timeline-number">2</div>
+                                <div class="timeline-content">
+                                    <h4>Initial Interview</h4>
+                                    <p>A phone or video call to discuss your background and interest in the position.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="col-md-3">
+                            <div class="timeline-step">
+                                <div class="timeline-number">3</div>
+                                <div class="timeline-content">
+                                    <h4>Technical Assessment</h4>
+                                    <p>A technical task or interview to evaluate your skills relevant to the position.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="col-md-3">
+                            <div class="timeline-step">
+                                <div class="timeline-number">4</div>
+                                <div class="timeline-content">
+                                    <h4>Final Interview & Offer</h4>
+                                    <p>Meeting with the team and discussions about joining Aaradhyadhrma.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle mx-auto" style="max-width: 700px;">
+                    Common questions about our application process
+                </p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="accordion" id="applicationFAQ">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How long does the hiring process typically take?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#applicationFAQ">
+                            <div class="accordion-body">
+                                <p>Our hiring process typically takes 2-4 weeks from application to offer, depending on the position and the number of applicants. We aim to keep you informed at each stage of the process.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Will I receive feedback if my application is unsuccessful?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#applicationFAQ">
+                            <div class="accordion-body">
+                                <p>Yes, we provide feedback to all candidates who reach the interview stage. Due to the volume of applications, we may not be able to provide detailed feedback to all applicants in the initial screening stage.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Can I apply for multiple positions simultaneously?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#applicationFAQ">
+                            <div class="accordion-body">
+                                <p>Yes, you can apply for multiple positions if you feel qualified for them. Please submit separate applications for each position to ensure proper consideration for each role.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                What should I expect in the technical assessment?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#applicationFAQ">
+                            <div class="accordion-body">
+                                <p>The technical assessment varies by position but may include coding challenges, design tasks, or technical discussions relevant to the role. We design our assessments to evaluate real-world skills rather than theoretical knowledge.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
