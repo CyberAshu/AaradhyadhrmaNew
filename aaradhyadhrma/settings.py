@@ -24,16 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!58-$(j#@c#7#85l)_b0)1^vvh5e%oan@3m$i)^-$cehw+&yr@'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # Site URL for generating absolute URLs
 SITE_URL = 'http://localhost:8000'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -189,16 +187,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 
 # Email settings
-# For development - emails will be printed to console (current setting)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# For production with Gmail, uncomment and configure these settings:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'aaradhyadhrmaservices@gmail.com'  # Your Gmail address
-# EMAIL_HOST_PASSWORD = 'your_app_password'  # Use App Password, not regular password
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 # Default sender email address
-DEFAULT_FROM_EMAIL = 'aaradhyadhrmaservices@gmail.com'
+DEFAULT_FROM_EMAIL = 'ayush.stevesai@gmail.com'

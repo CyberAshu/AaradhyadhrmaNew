@@ -50,8 +50,11 @@
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="terms_check" required>
       <label class="form-check-label" for="terms_check">
-        {% blocktrans %}I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>{% endblocktrans %}
-      </label>
+        {% blocktrans %}I agree to the{% endblocktrans %}
+        <a href="{% url 'core:terms_of_service' %}" class="text-primary">{% trans "Terms of Service" %}</a>
+        {% blocktrans %}and{% endblocktrans %}
+        <a href="{% url 'core:privacy_policy' %}" class="text-primary">{% trans "Privacy Policy" %}</a>
+    </label>
     </div>
     
     {% if redirect_field_value %}
