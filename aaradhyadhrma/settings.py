@@ -29,7 +29,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = True
 
 # Site URL for generating absolute URLs
-SITE_URL = 'http://localhost:8000'
+
+SITE_URL = os.environ.get('SITE_URL')
 
 ALLOWED_HOSTS = ['*']
 
