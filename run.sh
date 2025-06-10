@@ -11,6 +11,7 @@ python manage.py migrate
 echo "Checking or updating superuser..."
 # Use environment variable for password to avoid hardcoding
 if [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
+    echo "Environment variable DJANGO_SUPERUSER_PASSWORD is set. Proceeding with superuser setup."
     # Create a temporary script to handle non-interactive superuser creation or update
     cat > temp_superuser.py << 'EOF'
 from django.contrib.auth import get_user_model
@@ -21,11 +22,15 @@ password = '$DJANGO_SUPERUSER_PASSWORD'
 try:
     user = User.objects.get(username=username)
     user.set_password(password)
+    user.is_staff = True
+    user.is_superuser = True
     user.save()
-    print(f"Superuser '{username}' password updated successfully.")
+    print(f"Superuser '{username}' password updated successfully. Staff and superuser status confirmed.")
 except User.DoesNotExist:
-    User.objects.create_superuser(username=username, email=email, password=password)
-    print(f"Superuser '{username}' created successfully.")
+    user = User.objects.create_superuser(username=username, email=email, password=password)
+    print(f"Superuser '{username}' created successfully with staff and superuser status.")
+except Exception as e:
+    print(f"Error during superuser setup: {str(e)}")
 EOF
     python manage.py shell < temp_superuser.py || echo 'Superuser creation or update failed.'
     rm temp_superuser.py
