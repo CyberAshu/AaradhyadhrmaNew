@@ -12,8 +12,22 @@ if ! python manage.py shell -c "from django.contrib.auth import get_user_model; 
     echo "Creating superuser..."
     # Use environment variable for password to avoid hardcoding
     if [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
-        python manage.py createsuperuser --noinput --username admin --email admin@aaradhyadhrma.com --password $DJANGO_SUPERUSER_PASSWORD || echo 'Superuser creation failed or already exists.'
-        echo "Superuser created successfully with provided password."
+        # Create a temporary script to handle non-interactive superuser creation
+        cat > temp_superuser.py << 'EOF'
+from django.contrib.auth import get_user_model
+User = get_user_model()
+username = 'admin'
+email = 'admin@aaradhyadhrma.com'
+password = '$DJANGO_SUPERUSER_PASSWORD'
+if not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username=username, email=email, password=password)
+    print(f"Superuser '{username}' created successfully.")
+else:
+    print(f"Superuser '{username}' already exists.")
+EOF
+        python manage.py shell < temp_superuser.py || echo 'Superuser creation failed or already exists.'
+        rm temp_superuser.py
+        echo "Superuser creation attempted with provided password."
     else
         echo "DJANGO_SUPERUSER_PASSWORD environment variable not set. Superuser creation will fail without password."
         python manage.py createsuperuser --noinput --username admin --email admin@aaradhyadhrma.com || echo 'Superuser creation failed or already exists.'
