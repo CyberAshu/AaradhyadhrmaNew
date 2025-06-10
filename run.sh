@@ -5,35 +5,35 @@ set -o errexit
 # Run database migrations
 python manage.py migrate
 
-# Create superuser if not exists (temporary workaround for Render)
+# Create or update superuser password (temporary workaround for Render)
 # Replace 'admin', 'admin@aaradhyadhrma.com' with desired credentials
 # Remove or comment out this section after initial setup for security
-if ! python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); exit(0 if User.objects.filter(is_superuser=True).exists() else 1)"; then
-    echo "Creating superuser..."
-    # Use environment variable for password to avoid hardcoding
-    if [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
-        # Create a temporary script to handle non-interactive superuser creation
-        cat > temp_superuser.py << 'EOF'
+echo "Checking or updating superuser..."
+# Use environment variable for password to avoid hardcoding
+if [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
+    # Create a temporary script to handle non-interactive superuser creation or update
+    cat > temp_superuser.py << 'EOF'
 from django.contrib.auth import get_user_model
 User = get_user_model()
 username = 'admin'
 email = 'admin@aaradhyadhrma.com'
 password = '$DJANGO_SUPERUSER_PASSWORD'
-if not User.objects.filter(username=username).exists():
+try:
+    user = User.objects.get(username=username)
+    user.set_password(password)
+    user.save()
+    print(f"Superuser '{username}' password updated successfully.")
+except User.DoesNotExist:
     User.objects.create_superuser(username=username, email=email, password=password)
     print(f"Superuser '{username}' created successfully.")
-else:
-    print(f"Superuser '{username}' already exists.")
 EOF
-        python manage.py shell < temp_superuser.py || echo 'Superuser creation failed or already exists.'
-        rm temp_superuser.py
-        echo "Superuser creation attempted with provided password."
-    else
-        echo "DJANGO_SUPERUSER_PASSWORD environment variable not set. Superuser creation will fail without password."
-        python manage.py createsuperuser --noinput --username admin --email admin@aaradhyadhrma.com || echo 'Superuser creation failed or already exists.'
-    fi
-    echo "Please ensure DJANGO_SUPERUSER_PASSWORD is set in Render environment variables for secure password setup."
+    python manage.py shell < temp_superuser.py || echo 'Superuser creation or update failed.'
+    rm temp_superuser.py
+    echo "Superuser creation or update attempted with provided password."
+else
+    echo "DJANGO_SUPERUSER_PASSWORD environment variable not set. Superuser creation or update will fail without password."
 fi
+echo "Please ensure DJANGO_SUPERUSER_PASSWORD is set in Render environment variables for secure password setup."
 
 # Start the Gunicorn server
 gunicorn aaradhyadhrma.wsgi:application --bind 0.0.0.0:$PORT
