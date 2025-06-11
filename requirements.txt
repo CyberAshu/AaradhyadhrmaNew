@@ -6,7 +6,8 @@ Pillow==10.2.0
 google-generativeai
 django-allauth==65.9.0
 whitenoise==6.6.0
-python-dotenv
+python-dotenv==1.0.1
 django-crispy-forms
 crispy-bootstrap5
 gunicorn
+psycopg2-binary==2.9.9
