@@ -133,7 +133,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'postgres'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', ''),
+        'HOST': os.getenv('DB_HOST', 'db.txwizkwexlogokxxjxgh.supabase.co'),
         'PORT': int(os.getenv('DB_PORT', '5432').strip("'").strip('"')),
     }
 }
