@@ -12,4 +12,4 @@ python manage.py createsu
 python manage.py migrate
 
 # Start the server with Gunicorn
-gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 aaradhyadhrma.wsgi:application
+venv/bin/gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 aaradhyadhrma.wsgi:application
