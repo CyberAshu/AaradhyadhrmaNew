@@ -135,6 +135,10 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD', ''),
         'HOST': os.getenv('DB_HOST', 'db.txwizkwexlogokxxjxgh.supabase.co'),
         'PORT': int(os.getenv('DB_PORT', '5432').strip("'").strip('"')),
+        'OPTIONS': {
+            'options': '-c statement_timeout=10000',
+            'connect_timeout': 10
+        }
     }
 }
 
