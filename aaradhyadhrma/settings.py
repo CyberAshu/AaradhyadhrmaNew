@@ -135,7 +135,9 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
         'OPTIONS': {
-            'sslmode': 'require',  # Enable SSL
+            'sslmode': 'require',
+            'connect_timeout': 10,
+            'options': '-c statement_timeout=15000',  # 15 seconds
         },
     }
 }
