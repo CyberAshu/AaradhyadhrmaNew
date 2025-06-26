@@ -17,8 +17,8 @@
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <div class="mb-3">
-                            {% if member.avatar %}
-                            <img src="{{ member.avatar.url }}" alt="{{ member.name }}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                            {% if member.photo %}
+                            <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
                             {% else %}
                             <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto" style="width: 100px; height: 100px;">
                                 <span style="font-size: 2.5rem;">{{ member.name|slice:":1" }}</span>
