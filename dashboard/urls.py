@@ -23,4 +23,6 @@ urlpatterns = [
     path('careers/delete/<int:pk>/', views.careers_delete, name='careers_delete'),
     path('users/', views.users_list, name='users_list'),
     path('users/edit/<int:pk>/', views.user_edit, name='user_edit'),
+    path('contact-messages/', views.contact_messages_list, name='contact_messages_list'),
+    path('contact-messages/delete/<int:pk>/', views.contact_message_delete, name='contact_message_delete'),
 ]

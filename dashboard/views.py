@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from blog.models import Post, Category, Tag
 from core.models import TeamMember, ContactMessage
 from careers.models import Job, JobApplication
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.urls import reverse
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -488,25 +488,78 @@ def user_edit(request, pk):
     
     if request.method == 'POST':
         # Process form data
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.email = request.POST.get('email')
-        user.is_active = request.POST.get('is_active') == 'on'
-        user.is_staff = request.POST.get('is_staff') == 'on'
-        user.is_superuser = request.POST.get('is_superuser') == 'on'
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        user.email = request.POST.get('email', '')
+        user.is_active = 'is_active' in request.POST
+        user.is_staff = 'is_staff' in request.POST
+        user.is_superuser = 'is_superuser' in request.POST
         
-        # Only change password if provided
+        # Update password if provided
         password = request.POST.get('password')
         if password:
             user.set_password(password)
-            
-        user.save()
         
-        messages.success(request, 'User updated successfully!')
+        user.save()
+        messages.success(request, f'User {user.username} has been updated.')
         return redirect('dashboard:users_list')
     
     context = {
-        'user_obj': user,  # Using user_obj to avoid conflict with request.user
-        'page_title': f'Edit User: {user.username} - Dashboard',
+        'user_edit': user,
+        'page_title': f'Edit User: {user.username} - Aaradhyadhrma Admin'
     }
-    return render(request, 'dashboard/users/edit.html', context)
+    return render(request, 'dashboard/user_edit.html', context)
+
+
+@login_required
+@user_passes_test(is_staff)
+def contact_messages_list(request):
+    """View to list all contact messages with search and pagination"""
+    contact_messages = ContactMessage.objects.all().order_by('-date_sent')
+    
+    # Search functionality
+    search_query = request.GET.get('q', '')
+    if search_query:
+        contact_messages = contact_messages.filter(
+            Q(name__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(subject__icontains=search_query) |
+            Q(message__icontains=search_query)
+        )
+    
+    # Pagination
+    paginator = Paginator(contact_messages, 20)  # Show 20 messages per page
+    page = request.GET.get('page')
+    
+    try:
+        messages_page = paginator.page(page)
+    except PageNotAnInteger:
+        messages_page = paginator.page(1)
+    except EmptyPage:
+        messages_page = paginator.page(paginator.num_pages)
+    
+    context = {
+        'contact_messages': messages_page,
+        'search_query': search_query,
+        'total_messages': contact_messages.count(),
+        'page_title': 'Contact Messages - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/contact_messages_list.html', context)
+
+
+@login_required
+@user_passes_test(is_staff)
+def contact_message_delete(request, pk):
+    """View to delete a contact message"""
+    message = get_object_or_404(ContactMessage, pk=pk)
+    if request.method == 'POST':
+        message.delete()
+        messages.success(request, 'Contact message has been deleted successfully.')
+        return redirect('dashboard:contact_messages_list')
+    
+    # If not a POST request, show confirmation page
+    context = {
+        'message': message,
+        'page_title': 'Delete Contact Message - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/contact_message_confirm_delete.html', context)
