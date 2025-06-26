@@ -193,7 +193,7 @@
                     </div>
                     <div class="border-top pt-3">
                         <h6 class="text-muted mb-2">Message</h6>
-                        <div id="modal-message-body" class="whitespace-pre-line"></div>
+                        <div id="modal-message-body" class="bg-light p-3 rounded" style="white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; max-height: 300px; overflow-y: auto;"></div>
                     </div>
                 </div>
             </div>
@@ -232,7 +232,23 @@
                 document.getElementById('modal-message-name').textContent = name;
                 document.getElementById('modal-message-email').textContent = email;
                 document.getElementById('modal-message-subject').textContent = subject;
-                document.getElementById('modal-message-body').textContent = message;
+                
+                // Handle message content with proper line breaks and escaping
+                const messageBody = document.getElementById('modal-message-body');
+                messageBody.innerHTML = ''; // Clear previous content
+                
+                // Create a pre element to preserve whitespace and line breaks
+                const pre = document.createElement('pre');
+                pre.style.whiteSpace = 'pre-wrap';
+                pre.style.wordBreak = 'break-word';
+                pre.style.fontFamily = 'inherit';
+                pre.style.margin = '0';
+                pre.style.padding = '0';
+                pre.style.background = 'transparent';
+                pre.style.border = 'none';
+                pre.textContent = message;
+                
+                messageBody.appendChild(pre);
                 document.getElementById('modal-message-date').textContent = date;
                 
                 // Update action links
