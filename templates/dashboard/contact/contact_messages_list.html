@@ -47,7 +47,15 @@
                         </thead>
                         <tbody>
                             {% for message in contact_messages %}
-                            <tr>
+                            <tr style="cursor: pointer;" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#messageModal"
+                                data-message-id="{{ message.id }}"
+                                data-message-name="{{ message.name }}"
+                                data-message-email="{{ message.email }}"
+                                data-message-subject="{{ message.subject|default:'No subject' }}"
+                                data-message-message="{{ message.message|escapejs }}"
+                                data-message-date="{{ message.date_sent|date:'F j, Y \a\t g:i A' }}">
                                 <td>{{ message.date_sent|date:"M d, Y H:i" }}</td>
                                 <td>{{ message.name }}</td>
                                 <td>
@@ -158,12 +166,89 @@
         </div>
     </div>
 </div>
+<!-- Message Detail Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="messageModalLabel">Message Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6 class="text-muted mb-1">From</h6>
+                            <p class="mb-0" id="modal-message-name"></p>
+                            <p class="text-muted mb-0" id="modal-message-email"></p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h6 class="text-muted mb-1">Date</h6>
+                            <p class="mb-0" id="modal-message-date"></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">Subject</h6>
+                        <h5 id="modal-message-subject"></h5>
+                    </div>
+                    <div class="border-top pt-3">
+                        <h6 class="text-muted mb-2">Message</h6>
+                        <div id="modal-message-body" class="whitespace-pre-line"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="modal-reply-link" class="btn btn-primary me-2">
+                    <i class="fas fa-reply me-1"></i> Reply
+                </a>
+                <a href="#" id="modal-delete-link" class="btn btn-outline-danger me-auto">
+                    <i class="fas fa-trash-alt me-1"></i> Delete
+                </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Initialize tooltips
+    // Initialize modal with message data
     document.addEventListener('DOMContentLoaded', function() {
+        const messageModal = document.getElementById('messageModal');
+        if (messageModal) {
+            messageModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                
+                // Extract message data from data-* attributes
+                const name = button.getAttribute('data-message-name');
+                const email = button.getAttribute('data-message-email');
+                const subject = button.getAttribute('data-message-subject');
+                const message = button.getAttribute('data-message-message');
+                const date = button.getAttribute('data-message-date');
+                const messageId = button.getAttribute('data-message-id');
+                
+                // Update modal content
+                document.getElementById('modal-message-name').textContent = name;
+                document.getElementById('modal-message-email').textContent = email;
+                document.getElementById('modal-message-subject').textContent = subject;
+                document.getElementById('modal-message-body').textContent = message;
+                document.getElementById('modal-message-date').textContent = date;
+                
+                // Update action links
+                document.getElementById('modal-reply-link').setAttribute('href', `mailto:${email}?subject=Re: ${encodeURIComponent(subject)}`);
+                document.getElementById('modal-delete-link').setAttribute('href', `/dashboard/contact-messages/delete/${messageId}/`);
+                
+                // Add confirmation for delete
+                document.getElementById('modal-delete-link').addEventListener('click', function(e) {
+                    if (!confirm('Are you sure you want to delete this message? This action cannot be undone.')) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        }
+        
+        // Initialize tooltips
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
