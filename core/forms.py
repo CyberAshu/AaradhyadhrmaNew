@@ -1,4 +1,6 @@
 from django import forms
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 from .models import ContactMessage
 
 class ContactForm(forms.ModelForm):
@@ -31,6 +33,10 @@ class ContactForm(forms.ModelForm):
         'rows': 5
     }))
     
+    # Add reCAPTCHA field
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    
     class Meta:
         model = ContactMessage
         fields = ['name', 'email', 'subject', 'inquiry_type', 'message']
+        # Note: captcha field is not included as it's not a model field

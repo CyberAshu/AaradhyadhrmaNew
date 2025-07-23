@@ -11,3 +11,4 @@ django-crispy-forms
 crispy-bootstrap5
 gunicorn
 psycopg2-binary==2.9.9
+django-recaptcha

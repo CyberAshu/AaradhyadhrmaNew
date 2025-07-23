@@ -432,7 +432,16 @@ def contact(request):
             messages.success(request, 'Your message has been sent successfully! We will get back to you shortly.')
             return redirect('core:contact')
         else:
-            messages.error(request, 'There was an error with your submission. Please check the form and try again.')
+            # Add specific error messages for debugging
+            if form.errors:
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        if field == 'captcha':
+                            messages.error(request, 'Please complete the reCAPTCHA verification.')
+                        else:
+                            messages.error(request, f'{field.title()}: {error}')
+            else:
+                messages.error(request, 'There was an error with your submission. Please check the form and try again.')
     else:
         form = ContactForm()
     

@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'careers',
     'accounts',
     'dashboard',
+    'django_recaptcha',
 ]
 
 # django-crispy-forms
@@ -198,3 +199,10 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 # Default sender email address
 DEFAULT_FROM_EMAIL = 'ayush.stevesai@gmail.com'
+
+# Google reCAPTCHA settings
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_REQUIRED_SCORE = None
+
+

@@ -1,0 +1,35 @@
+/* Custom reCAPTCHA Styling */
+.recaptcha-container {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recaptcha-container iframe {
+    max-width: 100%;
+}
+
+/* Responsive reCAPTCHA */
+@media (max-width: 768px) {
+    .recaptcha-container {
+        padding: 5px;
+        margin: 15px 0;
+    }
+}
+
+/* Error styling for reCAPTCHA */
+.field-error .recaptcha-container {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+}
+
+/* Success styling */
+.recaptcha-container.verified {
+    border-color: #28a745;
+    background-color: #d4edda;
+}

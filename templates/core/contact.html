@@ -2,6 +2,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/recaptcha-custom.css' %}">
+{% endblock %}
+
 {% block content %}
 <!-- Contact Hero Section -->
 <section class="contact-hero-section py-5 bg-light">
@@ -96,6 +100,9 @@
                             </div>
                             <div class="col-12">
                                 {{ form.message|as_crispy_field }}
+                            </div>
+                            <div class="col-12 mt-3">
+                                {{ form.captcha|as_crispy_field }}
                             </div>
                             <div class="col-12 mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
