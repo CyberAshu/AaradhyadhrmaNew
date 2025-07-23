@@ -41,7 +41,25 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
+# Custom error handlers
+from django.conf.urls import handler404, handler500
+from core import views as core_views
+
+handler404 = core_views.custom_404_view
+handler500 = core_views.custom_500_view
+
 # Serve media files during development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+    # Add test URL for 404 page in development
+    from django.urls import path
+    from core.views import custom_404_view
+    
+    def test_404(request):
+        return custom_404_view(request, None)
+    
+    urlpatterns += [
+        path('test-404/', test_404, name='test_404'),
+    ]

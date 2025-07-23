@@ -586,3 +586,32 @@ def case_study(request, slug):
     }
     
     return render(request, 'core/case_study.html', context)
+
+
+# Custom Error Handlers
+def custom_404_view(request, exception):
+    """
+    Custom 404 error handler
+    """
+    context = {
+        'page_title': '404 - Page Not Found | Aaradhyadhrma',
+        'meta_description': 'The page you are looking for was not found. Return to Aaradhyadhrma homepage.',
+        'meta_keywords': '404, page not found, error',
+        'og_title': '404 - Page Not Found | Aaradhyadhrma',
+        'og_description': 'The page you are looking for was not found.',
+    }
+    return render(request, '404.html', context, status=404)
+
+
+def custom_500_view(request):
+    """
+    Custom 500 error handler
+    """
+    context = {
+        'page_title': '500 - Server Error | Aaradhyadhrma',
+        'meta_description': 'We are experiencing technical difficulties. Please try again later.',
+        'meta_keywords': '500, server error, technical issues',
+        'og_title': '500 - Server Error | Aaradhyadhrma',
+        'og_description': 'We are experiencing technical difficulties.',
+    }
+    return render(request, '500.html', context, status=500)
