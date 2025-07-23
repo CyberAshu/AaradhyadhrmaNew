@@ -698,6 +698,22 @@
 .dark-mode .hero-floating-card {
     background-color: #1a202c;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    color: inherit;
+}
+
+.dark-mode .hero-floating-card:hover {
+    background-color: #2d3748;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    color: inherit;
+    text-decoration: none;
+}
+
+.dark-mode .hero-floating-card:hover .hero-card-icon {
+    background: rgba(110, 143, 255, 0.3);
+}
+
+.dark-mode .hero-floating-card:hover .hero-card-text {
+    color: var(--primary-color);
 }
 
 .dark-mode .hero-card-text {

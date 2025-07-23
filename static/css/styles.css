@@ -480,6 +480,26 @@ img {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     z-index: 3;
     animation: float 5s ease-in-out infinite alternate;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-floating-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: inherit;
+}
+
+.hero-floating-card:hover .hero-card-icon {
+    background: rgba(110, 143, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.hero-floating-card:hover .hero-card-text {
+    color: var(--primary-color);
 }
 
 .hero-card-1 {
