@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blog.models import Post, Category, Tag
-from core.models import TeamMember, ContactMessage
+from core.models import TeamMember, ContactMessage, QuickReplyTemplate
 from careers.models import Job, JobApplication
 from django.db.models import Count, Q
 from django.urls import reverse
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Helper function to check if user is staff
 def is_staff(user):
@@ -563,3 +565,146 @@ def contact_message_delete(request, pk):
         'page_title': 'Delete Contact Message - Aaradhyadhrma Admin'
     }
     return render(request, 'dashboard/contact/contact_message_confirm_delete.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def contact_message_quick_reply(request, pk):
+    """View to send a quick reply to a contact message"""
+    message = get_object_or_404(ContactMessage, pk=pk)
+    
+    if request.method == 'POST':
+        template_id = request.POST.get('template_id')
+        custom_subject = request.POST.get('custom_subject', '')
+        custom_message = request.POST.get('custom_message', '')
+        
+        try:
+            if template_id:
+                # Use selected template
+                template = get_object_or_404(QuickReplyTemplate, pk=template_id, is_active=True)
+                subject = f"Re: {message.subject}" if not custom_subject else custom_subject
+                reply_message = template.get_formatted_message(message.name)
+                
+                # Override with custom content if provided
+                if custom_subject:
+                    subject = custom_subject
+                if custom_message:
+                    reply_message = custom_message
+            else:
+                # Use custom content only
+                subject = custom_subject or f"Re: {message.subject}"
+                reply_message = custom_message
+            
+            if not reply_message:
+                messages.error(request, 'Please provide a message or select a template.')
+                return redirect('dashboard:contact_message_quick_reply', pk=pk)
+            
+            # Send email
+            send_mail(
+                subject=subject,
+                message=reply_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[message.email],
+                fail_silently=False,
+            )
+            
+            # Mark message as read
+            message.is_read = True
+            message.save()
+            
+            messages.success(request, f'Quick reply sent successfully to {message.name} ({message.email}).')
+            return redirect('dashboard:contact_messages_list')
+            
+        except Exception as e:
+            messages.error(request, f'Failed to send email: {str(e)}')
+            return redirect('dashboard:contact_message_quick_reply', pk=pk)
+    
+    # GET request - show form
+    quick_reply_templates = QuickReplyTemplate.objects.filter(is_active=True)
+    
+    context = {
+        'message': message,
+        'quick_reply_templates': quick_reply_templates,
+        'page_title': f'Quick Reply to {message.name} - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/quick_reply.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def quick_reply_templates_list(request):
+    """View to list and manage quick reply templates"""
+    templates = QuickReplyTemplate.objects.all()
+    
+    context = {
+        'templates': templates,
+        'page_title': 'Quick Reply Templates - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/templates_list.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def quick_reply_template_create(request):
+    """View to create a new quick reply template"""
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        template_type = request.POST.get('template_type')
+        subject = request.POST.get('subject')
+        message_content = request.POST.get('message')
+        is_active = request.POST.get('is_active') == 'on'
+        
+        QuickReplyTemplate.objects.create(
+            name=name,
+            template_type=template_type,
+            subject=subject,
+            message=message_content,
+            is_active=is_active
+        )
+        
+        messages.success(request, 'Quick reply template created successfully!')
+        return redirect('dashboard:quick_reply_templates_list')
+    
+    context = {
+        'template_types': QuickReplyTemplate.TEMPLATE_TYPES,
+        'page_title': 'Create Quick Reply Template - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/template_form.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def quick_reply_template_edit(request, pk):
+    """View to edit a quick reply template"""
+    template = get_object_or_404(QuickReplyTemplate, pk=pk)
+    
+    if request.method == 'POST':
+        template.name = request.POST.get('name')
+        template.template_type = request.POST.get('template_type')
+        template.subject = request.POST.get('subject')
+        template.message = request.POST.get('message')
+        template.is_active = request.POST.get('is_active') == 'on'
+        template.save()
+        
+        messages.success(request, 'Quick reply template updated successfully!')
+        return redirect('dashboard:quick_reply_templates_list')
+    
+    context = {
+        'template': template,
+        'template_types': QuickReplyTemplate.TEMPLATE_TYPES,
+        'page_title': f'Edit Template: {template.name} - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/template_form.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def quick_reply_template_delete(request, pk):
+    """View to delete a quick reply template"""
+    template = get_object_or_404(QuickReplyTemplate, pk=pk)
+    
+    if request.method == 'POST':
+        template.delete()
+        messages.success(request, 'Quick reply template deleted successfully!')
+        return redirect('dashboard:quick_reply_templates_list')
+    
+    context = {
+        'template': template,
+        'page_title': f'Delete Template: {template.name} - Aaradhyadhrma Admin'
+    }
+    return render(request, 'dashboard/contact/template_delete.html', context)

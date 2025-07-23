@@ -239,6 +239,11 @@
                     {% endif %}
                 </a>
             </li>
+            <li {% if '/dashboard/quick-reply-templates/' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'dashboard:quick_reply_templates_list' %}">
+                    <i class="fas fa-clipboard-list"></i> Quick Reply Templates
+                </a>
+            </li>
             <li {% if '/dashboard/users/' in request.path %}class="active"{% endif %}>
                 <a href="{% url 'dashboard:users_list' %}">
                     <i class="fas fa-user"></i> Users

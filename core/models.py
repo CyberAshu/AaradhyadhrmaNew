@@ -109,3 +109,29 @@ class ContactForm(models.Model):
     
     def __str__(self):
         return f"Contact from {self.name} - {self.date_submitted.strftime('%Y-%m-%d %H:%M')}"
+
+class QuickReplyTemplate(models.Model):
+    TEMPLATE_TYPES = [
+        ('general', 'General Inquiry'),
+        ('reseller', 'Reseller Information'),
+        ('support', 'Support Request'),
+        ('custom', 'Custom Template'),
+    ]
+    
+    name = models.CharField(max_length=100, help_text="Display name for this template")
+    template_type = models.CharField(max_length=20, choices=TEMPLATE_TYPES, default='general')
+    subject = models.CharField(max_length=200, help_text="Email subject line")
+    message = models.TextField(help_text="Email message content. You can use {name} to insert recipient's name.")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['template_type', 'name']
+    
+    def __str__(self):
+        return f"{self.name} ({self.get_template_type_display()})"
+    
+    def get_formatted_message(self, recipient_name=''):
+        """Format the message with recipient's name"""
+        return self.message.replace('{name}', recipient_name)

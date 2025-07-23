@@ -71,8 +71,12 @@
                                     </span>
                                 </td>
                                 <td>
+                                    <a href="{% url 'dashboard:contact_message_quick_reply' message.id %}" 
+                                       class="btn btn-sm btn-success me-1" title="Quick Reply">
+                                        <i class="fas fa-bolt"></i>
+                                    </a>
                                     <a href="mailto:{{ message.email }}?subject=Re: {{ message.subject|default:'Your message' }}" 
-                                       class="btn btn-sm btn-outline-primary" title="Reply">
+                                       class="btn btn-sm btn-outline-primary me-1" title="Reply">
                                         <i class="fas fa-reply"></i>
                                     </a>
                                     <a href="{% url 'admin:core_contactmessage_change' message.id %}" 
@@ -198,6 +202,9 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <a href="#" id="modal-quick-reply-link" class="btn btn-success me-2">
+                    <i class="fas fa-bolt me-1"></i> Quick Reply
+                </a>
                 <a href="#" id="modal-reply-link" class="btn btn-primary me-2">
                     <i class="fas fa-reply me-1"></i> Reply
                 </a>
@@ -239,6 +246,7 @@
                 document.getElementById('modal-message-date').textContent = date;
                 
                 // Update action links
+                document.getElementById('modal-quick-reply-link').setAttribute('href', `/dashboard/contact-messages/quick-reply/${messageId}/`);
                 document.getElementById('modal-reply-link').setAttribute('href', `mailto:${email}?subject=Re: ${encodeURIComponent(subject)}`);
                 document.getElementById('modal-delete-link').setAttribute('href', `/dashboard/contact-messages/delete/${messageId}/`);
                 

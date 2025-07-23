@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TeamMember, Testimonial, ContactMessage, Skill, Project, ContactForm
+from .models import TeamMember, Testimonial, ContactMessage, Skill, Project, ContactForm, QuickReplyTemplate
 
 @admin.register(TeamMember)
 class TeamMemberAdmin(admin.ModelAdmin):
@@ -56,3 +56,24 @@ class ContactFormAdmin(admin.ModelAdmin):
         if obj and obj.source == 'chatbot':
             form.base_fields['message'].help_text = "This message was submitted through the chatbot interface."
         return form
+
+@admin.register(QuickReplyTemplate)
+class QuickReplyTemplateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'template_type', 'subject', 'is_active', 'created_at')
+    list_filter = ('template_type', 'is_active', 'created_at')
+    search_fields = ('name', 'subject', 'message')
+    list_editable = ('is_active',)
+    readonly_fields = ('created_at', 'updated_at')
+    
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'template_type', 'is_active')
+        }),
+        ('Email Content', {
+            'fields': ('subject', 'message')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
