@@ -54,7 +54,7 @@
                                 data-message-name="{{ message.name }}"
                                 data-message-email="{{ message.email }}"
                                 data-message-subject="{{ message.subject|default:'No subject' }}"
-                                data-message-message="{{ message.message|escapejs }}"
+                                data-message-message="{{ message.message|escape }}"
                                 data-message-date="{{ message.date_sent|date:'F j, Y \a\t g:i A' }}">
                                 <td>{{ message.date_sent|date:"M d, Y H:i" }}</td>
                                 <td>{{ message.name }}</td>
@@ -233,22 +233,9 @@
                 document.getElementById('modal-message-email').textContent = email;
                 document.getElementById('modal-message-subject').textContent = subject;
                 
-                // Handle message content with proper line breaks and escaping
+                // Handle message content with proper line breaks
                 const messageBody = document.getElementById('modal-message-body');
-                messageBody.innerHTML = ''; // Clear previous content
-                
-                // Create a pre element to preserve whitespace and line breaks
-                const pre = document.createElement('pre');
-                pre.style.whiteSpace = 'pre-wrap';
-                pre.style.wordBreak = 'break-word';
-                pre.style.fontFamily = 'inherit';
-                pre.style.margin = '0';
-                pre.style.padding = '0';
-                pre.style.background = 'transparent';
-                pre.style.border = 'none';
-                pre.textContent = message;
-                
-                messageBody.appendChild(pre);
+                messageBody.textContent = message;
                 document.getElementById('modal-message-date').textContent = date;
                 
                 // Update action links

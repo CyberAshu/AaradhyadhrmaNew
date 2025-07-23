@@ -487,7 +487,7 @@
                                 <button class="team-member-action-btn btn-flip" onclick="toggleFlip(this)">
                                     <i class="fas fa-sync-alt"></i> Info
                                 </button>
-                                <a href="{% url 'core:team_member_detail' 1 %}" class="team-member-action-btn btn-profile">
+                                <a href="{% url 'core:team_member_detail' member.id %}" class="team-member-action-btn btn-profile">
                                     <i class="fas fa-user"></i> Profile
                                 </a>
                             </div>
@@ -539,9 +539,6 @@
                                 <button class="team-member-action-btn btn-flip" onclick="toggleFlip(this)">
                                     <i class="fas fa-sync-alt"></i> Info
                                 </button>
-                                <a href="{% url 'core:team_member_detail' 1 %}" class="team-member-action-btn btn-profile">
-                                    <i class="fas fa-user"></i> Profile
-                                </a>
                             </div>
                         </div>
                     </div>
