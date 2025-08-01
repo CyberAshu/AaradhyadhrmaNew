@@ -26,8 +26,11 @@ urlpatterns = [
     path('contact-messages/', views.contact_messages_list, name='contact_messages_list'),
     path('contact-messages/delete/<int:pk>/', views.contact_message_delete, name='contact_message_delete'),
     path('contact-messages/quick-reply/<int:pk>/', views.contact_message_quick_reply, name='contact_message_quick_reply'),
+    path('contact-messages/mark-read/<int:pk>/', views.contact_message_mark_read, name='contact_message_mark_read'),
+    path('contact-messages/mark-unread/<int:pk>/', views.contact_message_mark_unread, name='contact_message_mark_unread'),
     path('quick-reply-templates/', views.quick_reply_templates_list, name='quick_reply_templates_list'),
     path('quick-reply-templates/create/', views.quick_reply_template_create, name='quick_reply_template_create'),
     path('quick-reply-templates/edit/<int:pk>/', views.quick_reply_template_edit, name='quick_reply_template_edit'),
     path('quick-reply-templates/delete/<int:pk>/', views.quick_reply_template_delete, name='quick_reply_template_delete'),
+    path('ajax/generate-ai-reply/<int:pk>/', views.generate_ai_reply_ajax, name='generate_ai_reply_ajax'),
 ]

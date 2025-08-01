@@ -88,6 +88,9 @@ class ContactMessage(models.Model):
     inquiry_type = models.CharField(max_length=50, blank=True, null=True)
     date_sent = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    is_replied = models.BooleanField(default=False)
+    read_at = models.DateTimeField(null=True, blank=True)
+    replied_at = models.DateTimeField(null=True, blank=True)
     
     class Meta:
         ordering = ['-date_sent']

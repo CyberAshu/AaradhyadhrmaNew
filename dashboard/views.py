@@ -1,3 +1,5 @@
+import os
+import google.generativeai as genai
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
@@ -11,6 +13,21 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from django.conf import settings
+
+# Configure Gemini AI
+try:
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+    if GEMINI_API_KEY:
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        GEMINI_ENABLED = True
+    else:
+        GEMINI_ENABLED = False
+        model = None
+except Exception as e:
+    GEMINI_ENABLED = False
+    model = None
+    print(f"Gemini AI configuration error: {e}")
 
 # Helper function to check if user is staff
 def is_staff(user):
@@ -519,6 +536,13 @@ def contact_messages_list(request):
     """View to list all contact messages with search and pagination"""
     contact_messages = ContactMessage.objects.all().order_by('-date_sent')
     
+    # Filter by read status
+    status_filter = request.GET.get('status', 'all')
+    if status_filter == 'unread':
+        contact_messages = contact_messages.filter(is_read=False)
+    elif status_filter == 'read':
+        contact_messages = contact_messages.filter(is_read=True)
+    
     # Search functionality
     search_query = request.GET.get('q', '')
     if search_query:
@@ -540,10 +564,19 @@ def contact_messages_list(request):
     except EmptyPage:
         messages_page = paginator.page(paginator.num_pages)
     
+    # Get count statistics for filters
+    total_count = ContactMessage.objects.count()
+    unread_count = ContactMessage.objects.filter(is_read=False).count()
+    read_count = ContactMessage.objects.filter(is_read=True).count()
+    
     context = {
         'contact_messages': messages_page,
         'search_query': search_query,
+        'status_filter': status_filter,
         'total_messages': contact_messages.count(),
+        'total_count': total_count,
+        'unread_count': unread_count,
+        'read_count': read_count,
         'page_title': 'Contact Messages - Aaradhyadhrma Admin'
     }
     return render(request, 'dashboard/contact/contact_messages_list.html', context)
@@ -569,16 +602,42 @@ def contact_message_delete(request, pk):
 @login_required
 @user_passes_test(is_staff)
 def contact_message_quick_reply(request, pk):
-    """View to send a quick reply to a contact message"""
+    """View to send a quick reply to a contact message, enhanced with AI template generation"""
     message = get_object_or_404(ContactMessage, pk=pk)
     
     if request.method == 'POST':
         template_id = request.POST.get('template_id')
         custom_subject = request.POST.get('custom_subject', '')
         custom_message = request.POST.get('custom_message', '')
+        auto_generate = request.POST.get('auto_generate')  # New field to check auto-generation
         
         try:
-            if template_id:
+            if auto_generate and GEMINI_ENABLED:
+                # Generate a reply using Gemini with enhanced prompt
+                prompt = f"""
+Generate a professional email reply to the following customer inquiry:
+
+Customer Name: {message.name}
+Customer Email: {message.email}
+Original Message: "{message.message}"
+
+Please write a helpful, professional response as if you're representing Aaradhyadhrma company. 
+Include specific details where possible and end with:
+
+Best regards,
+Aaradhyadhrma Team
+Email: info@aaradhyadhrma.com
+Website: www.aaradhyadhrma.life
+
+Make the response personalized and helpful.
+"""
+                gemini_response = model.generate_content([prompt])
+                subject = f"Re: {message.subject}"
+                reply_message = gemini_response.text
+                # Pre-fill the AI-generated message
+                request.POST = request.POST.copy()
+                request.POST['custom_message'] = reply_message
+            elif template_id:
                 # Use selected template
                 template = get_object_or_404(QuickReplyTemplate, pk=template_id, is_active=True)
                 subject = f"Re: {message.subject}" if not custom_subject else custom_subject
@@ -595,7 +654,7 @@ def contact_message_quick_reply(request, pk):
                 reply_message = custom_message
             
             if not reply_message:
-                messages.error(request, 'Please provide a message or select a template.')
+                messages.error(request, 'Please provide a message or select a template, or enable AI auto-generation.')
                 return redirect('dashboard:contact_message_quick_reply', pk=pk)
             
             # Send email
@@ -607,8 +666,13 @@ def contact_message_quick_reply(request, pk):
                 fail_silently=False,
             )
             
-            # Mark message as read
+            # Mark message as read and replied
+            from django.utils import timezone
             message.is_read = True
+            message.is_replied = True
+            if not message.read_at:
+                message.read_at = timezone.now()
+            message.replied_at = timezone.now()
             message.save()
             
             messages.success(request, f'Quick reply sent successfully to {message.name} ({message.email}).')
@@ -708,3 +772,136 @@ def quick_reply_template_delete(request, pk):
         'page_title': f'Delete Template: {template.name} - Aaradhyadhrma Admin'
     }
     return render(request, 'dashboard/contact/template_delete.html', context)
+
+@login_required
+@user_passes_test(is_staff)
+def contact_message_mark_read(request, pk):
+    """Mark a contact message as read"""
+    message = get_object_or_404(ContactMessage, pk=pk)
+    
+    if request.method == 'POST':
+        from django.utils import timezone
+        message.is_read = True
+        if not message.read_at:
+            message.read_at = timezone.now()
+        message.save()
+        
+        if request.headers.get('Content-Type') == 'application/json':
+            return JsonResponse({'success': True})
+        else:
+            messages.success(request, f'Message from {message.name} marked as read.')
+            return redirect('dashboard:contact_messages_list')
+    
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+@login_required
+@user_passes_test(is_staff)
+def contact_message_mark_unread(request, pk):
+    """Mark a contact message as unread"""
+    message = get_object_or_404(ContactMessage, pk=pk)
+    
+    if request.method == 'POST':
+        message.is_read = False
+        message.read_at = None
+        message.save()
+        
+        if request.headers.get('Content-Type') == 'application/json':
+            return JsonResponse({'success': True})
+        else:
+            messages.success(request, f'Message from {message.name} marked as unread.')
+            return redirect('dashboard:contact_messages_list')
+    
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+@login_required
+@user_passes_test(is_staff)
+def generate_ai_reply_ajax(request, pk):
+    """AJAX endpoint to generate AI reply for a contact message"""
+    if request.method == 'POST' and GEMINI_ENABLED:
+        try:
+            message = get_object_or_404(ContactMessage, pk=pk)
+            
+            # Generate a reply and professional subject using Gemini
+            prompt = f"""
+Generate a professional email reply and a compelling subject line to the following customer inquiry:
+
+Customer Name: {message.name}
+Customer Email: {message.email}
+Original Message: "{message.message}"
+
+Please craft a subject line that captures the essence of the inquiry and the response.
+
+Write the email body as if representing Aaradhyadhrma - a technology and digital services company specializing in web development, software solutions, and digital transformation services.
+
+Describe our offerings in detail, avoiding placeholder text like [Insert...] or [Brief description...].
+Write concrete details about services and capabilities.
+
+End the response with:
+
+Best regards,
+Aaradhyadhrma Team
+Email: info@aaradhyadhrma.com
+Website: www.aaradhyadhrma.life
+
+IMPORTANT: 
+- Include a professional subject line
+- Do NOT use placeholder text or brackets like [Service 1], [Insert...], etc.
+- Be specific, concise, and professional
+- Start the email body directly with the greeting
+- Separate subject and body clearly
+"""
+            
+            gemini_response = model.generate_content([prompt])
+            response_text = gemini_response.text
+            
+            # Extract subject and body from AI response
+            lines = response_text.strip().split('\n')
+            ai_subject = f"Re: {message.subject}"  # Default fallback
+            email_body = response_text
+            
+            # Look for subject line in response (multiple formats)
+            for i, line in enumerate(lines):
+                line_lower = line.strip().lower()
+                original_line = line.strip()
+                
+                # Check various subject formats
+                if (line_lower.startswith('subject:') or 
+                    line_lower.startswith('**subject:') or
+                    line_lower.startswith('subject -') or
+                    'subject:' in line_lower):
+                    
+                    # Extract subject - handle different formats
+                    if '**subject:' in line_lower:
+                        # Format: **Subject: Title**
+                        ai_subject = original_line.split(':', 1)[1].strip().replace('**', '').strip()
+                    elif 'subject:' in line_lower:
+                        # Format: Subject: Title
+                        ai_subject = original_line.split(':', 1)[1].strip()
+                    elif 'subject -' in line_lower:
+                        # Format: Subject - Title
+                        ai_subject = original_line.split('-', 1)[1].strip()
+                    
+                    # Remove subject line from body and clean up
+                    remaining_lines = lines[i+1:]
+                    # Skip empty lines after subject
+                    while remaining_lines and not remaining_lines[0].strip():
+                        remaining_lines = remaining_lines[1:]
+                    email_body = '\n'.join(remaining_lines).strip()
+                    break
+            
+            return JsonResponse({
+                'success': True,
+                'reply': email_body,
+                'subject': ai_subject
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            })
+    
+    return JsonResponse({
+        'success': False,
+        'error': 'AI not enabled or invalid request'
+    })

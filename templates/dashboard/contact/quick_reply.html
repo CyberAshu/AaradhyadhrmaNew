@@ -36,8 +36,30 @@
                 <form method="post">
                     {% csrf_token %}
                     
-                    <!-- Template Selection -->
+                    <!-- AI Auto-Generation Option -->
                     <div class="mb-4">
+                        <div class="card border-info">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-robot me-1"></i>AI Auto-Generate Reply
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="auto_generate" name="auto_generate" onchange="toggleOptions()">
+                                    <label class="form-check-label" for="auto_generate">
+                                        <strong>Let AI generate a professional reply automatically</strong>
+                                    </label>
+                                </div>
+                                <div class="form-text mt-2">
+                                    <i class="fas fa-info-circle"></i> AI will analyze the original message and create a personalized, professional response.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template Selection -->
+                    <div class="mb-4" id="template-section">
                         <label for="template_id" class="form-label">
                             <i class="fas fa-template me-1"></i>Select Template (Optional)
                         </label>
@@ -107,6 +129,109 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const autoGenerateCheckbox = document.getElementById('auto_generate');
+    autoGenerateCheckbox.addEventListener('change', function() {
+        if (autoGenerateCheckbox.checked) {
+            generateAIReply();
+        } else {
+            clearAIReply();
+        }
+    });
+});
+
+function generateAIReply() {
+    const messageId = {{ message.id }};
+    const messageField = document.getElementById('custom_message');
+    const subjectField = document.getElementById('custom_subject');
+    
+    // Show loading state
+    messageField.placeholder = 'Generating AI reply... Please wait.';
+    messageField.disabled = true;
+    
+    fetch(`/dashboard/ajax/generate-ai-reply/${messageId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageField.value = data.reply;
+            subjectField.value = data.subject;
+            messageField.placeholder = 'AI-generated reply (editable)';
+        } else {
+            alert('Error generating AI reply: ' + data.error);
+            messageField.placeholder = 'Type your reply message here...';
+        }
+        messageField.disabled = false;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate AI reply. Please try again.');
+        messageField.placeholder = 'Type your reply message here...';
+        messageField.disabled = false;
+    });
+}
+
+// Function to get CSRF token from cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function clearAIReply() {
+    document.getElementById('custom_message').value = '';
+    document.getElementById('custom_subject').value = 'Re: {{ message.subject|escapejs }}';
+}
+
+function toggleOptions() {
+    const autoGenerateCheckbox = document.getElementById('auto_generate');
+    const templateSection = document.getElementById('template-section');
+    const subjectField = document.getElementById('custom_subject');
+    const messageField = document.getElementById('custom_message');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    if (autoGenerateCheckbox.checked) {
+        // Hide template section when AI is enabled
+        templateSection.style.opacity = '0.5';
+        templateSection.style.pointerEvents = 'none';
+        
+        // Pre-fill and enable manual fields with AI content
+        messageField.disabled = false;
+        messageField.placeholder = 'AI-generated reply (editable).';
+        
+        // Update submit button text
+        submitButton.innerHTML = '\u003ci class="fas fa-paper-plane me-1"\u003e\u003c/i\u003e Send AI Reply';
+        submitButton.className = 'btn btn-info';
+    } else {
+        // Show template section when AI is disabled
+        templateSection.style.opacity = '1';
+        templateSection.style.pointerEvents = 'auto';
+        
+        // Enable manual fields
+        messageField.disabled = false;
+        messageField.placeholder = 'Type your reply message here...';
+        
+        // Reset submit button
+        submitButton.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Send Quick Reply';
+        submitButton.className = 'btn btn-success';
+    }
+}
+
 function loadTemplate() {
     const select = document.getElementById('template_id');
     const selectedOption = select.options[select.selectedIndex];
