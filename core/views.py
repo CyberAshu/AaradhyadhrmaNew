@@ -390,6 +390,7 @@ def testimonials(request):
         'meta_keywords': 'testimonials, client reviews, customer feedback, software development reviews',
         'og_title': 'Client Testimonials | Aaradhyadhrma',
         'og_description': 'See what our satisfied clients have to say about our services and solutions.',
+        'video_testimonials': video_testimonials,
         'testimonials': testimonials,
     }
     
